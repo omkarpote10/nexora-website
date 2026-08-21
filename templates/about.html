@@ -328,6 +328,91 @@ h1{max-width:16ch}
   .hero-visual,.heroVisual{height:280px!important;min-height:280px!important}
 }
 
+
+/* ===== V14 MOBILE SAFE MODE ===== */
+.nx-mobile-safe .nx-webgl-shell,
+.nx-mobile-safe .nx-story-indicator,
+.nx-mobile-safe #fx{
+  display:none!important;
+}
+
+.nx-mobile-safe .nx-three-fallback-hidden{
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+}
+
+.nx-mobile-safe .hero,
+.nx-mobile-safe .section{
+  box-shadow:0 8px 22px rgba(0,0,0,.16)!important;
+}
+
+.nx-mobile-safe .glow,
+.nx-mobile-safe .cursorGlow,
+.nx-mobile-safe .cursor{
+  display:none!important;
+}
+
+.nx-mobile-safe nav,
+.nx-mobile-safe .nx-mobile-menu{
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  background:rgba(5,5,9,.97)!important;
+}
+
+.nx-mobile-safe .reveal,
+.nx-mobile-safe .nx-fade-up{
+  filter:none!important;
+  transition-duration:.45s!important;
+}
+
+.nx-mobile-safe .n3d,
+.nx-mobile-safe .orbit,
+.nx-mobile-safe .holo,
+.nx-mobile-safe .portal,
+.nx-mobile-safe .constellation,
+.nx-mobile-safe .pillar,
+.nx-mobile-safe .stage,
+.nx-mobile-safe .panel3d{
+  animation-duration:14s!important;
+  animation-timing-function:ease-in-out!important;
+}
+
+.nx-mobile-safe .shard:nth-of-type(n+3){
+  display:none!important;
+}
+
+.nx-mobile-safe .project:hover,
+.nx-mobile-safe .card:hover,
+.nx-mobile-safe .service:hover{
+  transform:none!important;
+}
+
+@media(max-width:900px){
+  .hero-visual,.heroVisual{
+    height:280px!important;
+    min-height:280px!important;
+  }
+
+  .heroCopy,.hero-copy{
+    padding-top:34px!important;
+    padding-bottom:24px!important;
+  }
+
+  h1{
+    font-size:clamp(42px,13vw,60px)!important;
+    line-height:.96!important;
+  }
+
+  .section,.hero{
+    border-radius:16px!important;
+  }
+
+  .service,.card,.project{
+    transition:none!important;
+  }
+}
+
 </style>
 
 <meta name="theme-color" content="#050507">
@@ -510,7 +595,7 @@ document.querySelectorAll(".principle,.expectCard,.storyCard").forEach(card=>{
 });
 
 const c=document.getElementById("fx"),ctx=c.getContext("2d");let W,H,dpr=Math.min(devicePixelRatio||1,2),pts=[];
-function size(){W=c.width=innerWidth*dpr;H=c.height=innerHeight*dpr;pts=Array.from({length:90},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.15*dpr,vy:(Math.random()-.5)*.15*dpr,r:(Math.random()*1.2+.35)*dpr,a:Math.random()*.45+.12}))}
+function size(){W=c.width=innerWidth*dpr;H=c.height=innerHeight*dpr;pts=Array.from({length:35},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.15*dpr,vy:(Math.random()-.5)*.15*dpr,r:(Math.random()*1.2+.35)*dpr,a:Math.random()*.45+.12}))}
 function loop(){ctx.clearRect(0,0,W,H);for(let i=0;i<pts.length;i++){const p=pts[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(173,81,255,${p.a})`;ctx.shadowBlur=10*dpr;ctx.shadowColor="rgba(137,55,255,.5)";ctx.fill();ctx.shadowBlur=0;if(i<32)for(let j=i+1;j<32;j++){const q=pts[j],d=Math.hypot(p.x-q.x,p.y-q.y);if(d<100*dpr){ctx.strokeStyle=`rgba(139,57,255,${(1-d/(100*dpr))*.05})`;ctx.lineWidth=.5*dpr;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke()}}}requestAnimationFrame(loop)}
 size();loop();addEventListener("resize",size);
 </script>
@@ -596,6 +681,7 @@ size();loop();addEventListener("resize",size);
 </script>
 
 
+<script src="{{ url_for('static', filename='nexora-mobile-safe.js') }}"></script>
 <script src="{{ url_for('static', filename='nexora-performance.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" crossorigin="anonymous"></script>
 <script src="{{ url_for('static', filename='nexora-three.js') }}"></script>
