@@ -1,45 +1,38 @@
-NEXORA SITE V12 — FINAL PREMIUM DETAIL PASS
+NEXORA SITE V13 — ADAPTIVE PERFORMANCE
 
-NEW
-- Final typography and interaction refinement
-- Improved focus/accessibility states
-- Better footer micro-interactions
-- Trust strip / polish details
-- Privacy page
-- Terms page
-- Legal links added to public pages
-- Privacy/Terms included in sitemap
-- Final QA checklist
+Same NEXORA design, but now the rendering load automatically adapts to the visitor's device.
 
-STILL INCLUDED
-- Real Three.js/WebGL
-- Cinematic homepage scroll story
-- Animated N split/reassembly
-- Services / Work / About / Contact
-- Multi-step enquiry form
-- Flask backend
-- CRM/admin pipeline
-- Lead notes/history
-- Email/WhatsApp actions
-- SMTP alerts
-- SEO / robots / sitemap
-- Production environment config
-- Mobile menu / page transitions
-- Reduced-motion support
+HIGH:
+- Full Three.js quality
+- Full particle field
+- Full cinematic scroll story
+- Higher WebGL pixel ratio
 
-RUN
-pip install -r requirements.txt
-python app.py
+MEDIUM:
+- About half the particles
+- Lower WebGL pixel ratio
+- Reduced blur/shadows
+- Lighter scroll story
 
-Open:
-http://127.0.0.1:5000
+LOW:
+- Minimal particle load
+- DPR capped at 1
+- Heavy blur removed
+- Nonessential decoration hidden
+- Off-screen animation paused
 
-Admin:
-http://127.0.0.1:5000/admin/login
+REDUCED MOTION:
+- Respects device accessibility preference
 
-Prototype admin:
-admin / nexora123
+Also optimized:
+- smaller mobile hero render area
+- less continuous GPU work
+- page-hidden animation pausing
+- off-screen section animation pausing
+- same backend/CRM/features retained
 
-BEFORE REAL LAUNCH
-Read FINAL_QA_CHECKLIST.md and DEPLOYMENT.md.
-Replace all placeholder contact/business details and review legal pages.
+DEPLOYMENT:
+Upload/replace these V13 files in the same GitHub repository.
+Render will automatically redeploy.
+
+Do not change your existing Render environment variables.

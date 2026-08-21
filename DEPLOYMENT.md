@@ -107,3 +107,10 @@ Test WebGL on:
 - Android Chrome
 
 The CSS hero artwork remains available as a fallback when the WebGL scene cannot initialize.
+
+
+## Adaptive performance
+
+V13 automatically chooses a high, medium, low or reduced-motion rendering profile based on device characteristics. This keeps the visual identity consistent while lowering GPU/CPU load on phones.
+
+Test on at least one mid-range Android phone before launch.
