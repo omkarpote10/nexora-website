@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEXORA — Premium Websites, Apps & Digital Experiences</title>
+  <meta name="description" content="Nexora builds premium websites, web apps, mobile apps, 3D experiences, e-commerce platforms and custom software.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#050507; --panel:#0b0b12; --panel2:#11111a; --text:#f7f7fb; --muted:#a7a7b3;
+      --purple:#8b39ff; --purple2:#b55cff; --line:rgba(255,255,255,.09); --glow:0 0 40px rgba(139,57,255,.32);
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:Inter,system-ui,sans-serif;background:radial-gradient(circle at 68% 12%,rgba(105,27,190,.18),transparent 24%),var(--bg);color:var(--text);overflow-x:hidden}
+    a{color:inherit;text-decoration:none} button{font:inherit}
+    .noise{position:fixed;inset:0;pointer-events:none;opacity:.035;z-index:99;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E")}
+    .cursor-glow{position:fixed;width:420px;height:420px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(139,57,255,.13),transparent 65%);transform:translate(-50%,-50%);z-index:0}
+    .wrap{width:min(1180px,92vw);margin:auto;position:relative;z-index:2}
+    nav{height:84px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.04)}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:.08em;font-size:23px}.mark{width:34px;height:34px;display:grid;place-items:center;font-weight:900;background:linear-gradient(135deg,#d47cff,#7c2dff 48%,#3d0e83);clip-path:polygon(15% 0,50% 26%,82% 0,82% 100%,50% 75%,15% 100%)}
+    .navlinks{display:flex;gap:30px;color:#d6d6df;font-size:14px}.navlinks a{transition:.25s}.navlinks a:hover{color:#fff;text-shadow:0 0 20px #9d4cff}
+    .btn{border:1px solid var(--line);color:#fff;background:rgba(255,255,255,.03);border-radius:12px;padding:14px 20px;font-weight:700;cursor:pointer;transition:.25s;display:inline-flex;gap:10px;align-items:center;justify-content:center}.btn:hover{transform:translateY(-2px);border-color:rgba(181,92,255,.6);box-shadow:var(--glow)}.btn.primary{background:linear-gradient(135deg,#a84eff,#6f24e9);border-color:transparent;box-shadow:0 10px 36px rgba(120,38,235,.35)}
+    .hero{min-height:780px;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:35px;padding:60px 0 38px}.eyebrow{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line);background:rgba(255,255,255,.025);border-radius:999px;padding:9px 13px;color:#c7a8ff;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.dot{width:8px;height:8px;border-radius:50%;background:#a94dff;box-shadow:0 0 14px #a94dff}
+    h1{font-size:clamp(52px,6vw,88px);line-height:.97;letter-spacing:-.055em;margin:24px 0 22px;max-width:780px}.grad{background:linear-gradient(90deg,#a94cff,#d875ff);-webkit-background-clip:text;background-clip:text;color:transparent}.lead{font-size:18px;line-height:1.7;color:var(--muted);max-width:620px}.actions{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap}.trust{display:flex;align-items:center;gap:16px;margin-top:30px;color:#c2c2cb;font-size:13px}.avatars{display:flex}.avatars span{width:34px;height:34px;border-radius:50%;border:2px solid #0a0a0f;margin-left:-8px;background:linear-gradient(135deg,#444,#111);display:grid;place-items:center;font-size:11px}.avatars span:first-child{margin-left:0}.stars{color:#b967ff;letter-spacing:2px}
+    .hero-visual{height:620px;position:relative;display:grid;place-items:center;perspective:1100px}.planet{position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle at 50% 48%,rgba(129,48,240,.28),rgba(64,15,121,.06) 38%,transparent 70%);filter:blur(4px)}
+    .orbit{position:absolute;width:520px;height:210px;border:1.5px solid rgba(189,100,255,.7);border-radius:50%;transform:rotate(-8deg);box-shadow:0 0 30px rgba(168,69,255,.25)}.orb{position:absolute;width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 20px #c56cff;offset-path:ellipse(260px 105px at 50% 50%);animation:orbit 6s linear infinite}@keyframes orbit{to{offset-distance:100%}}
+    .n3d{font-size:340px;font-weight:900;line-height:.8;letter-spacing:-.16em;padding-right:.14em;color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.8);background:linear-gradient(140deg,#e3a7ff 0%,#8f38ff 34%,#2b075c 65%,#d575ff 100%);-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 0 28px rgba(161,68,255,.55));transform-style:preserve-3d;animation:float 5s ease-in-out infinite;position:relative;z-index:2;text-shadow:22px 24px 0 rgba(49,8,90,.18)}@keyframes float{50%{transform:translateY(-18px) rotateY(-7deg) rotateX(3deg)}}
+    .rock{position:absolute;bottom:72px;width:450px;height:78px;background:linear-gradient(180deg,#25113f,#10091c);border-radius:50%;filter:drop-shadow(0 0 24px rgba(151,52,255,.6));transform:rotateX(70deg);box-shadow:inset 0 0 30px rgba(198,109,255,.25)}
+    .service-strip{border:1px solid var(--line);background:rgba(8,8,14,.88);backdrop-filter:blur(18px);border-radius:18px;display:grid;grid-template-columns:repeat(6,1fr);overflow:hidden;margin-top:-16px}.mini{padding:22px 18px;border-right:1px solid var(--line)}.mini:last-child{border:0}.mini b{display:block;font-size:14px}.mini span{display:block;color:var(--muted);font-size:11px;margin-top:7px;line-height:1.5}.icon{font-size:21px;color:#b75dff;margin-bottom:10px}
+    section{padding:110px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:38px}.kicker{color:#b464ff;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.section-head h2{font-size:clamp(34px,4vw,58px);margin:10px 0 0;letter-spacing:-.04em;max-width:720px}.section-head p{max-width:430px;color:var(--muted);line-height:1.7}
+    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.card{background:linear-gradient(180deg,rgba(18,18,28,.94),rgba(8,8,13,.95));border:1px solid var(--line);border-radius:18px;padding:26px;min-height:240px;position:relative;overflow:hidden;transition:.3s}.card:before{content:"";position:absolute;width:160px;height:160px;border-radius:50%;right:-70px;top:-70px;background:radial-gradient(circle,rgba(152,55,255,.23),transparent 65%)}.card:hover{transform:translateY(-8px);border-color:rgba(174,81,255,.45);box-shadow:0 20px 60px rgba(0,0,0,.35)}.card .num{font-size:12px;color:#8453b8}.card h3{font-size:20px;margin:55px 0 10px}.card p{font-size:13px;color:var(--muted);line-height:1.7}.card .arrow{position:absolute;right:22px;bottom:20px;color:#b966ff}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:20px;overflow:hidden;background:linear-gradient(90deg,rgba(111,29,190,.11),rgba(9,9,14,.9),rgba(111,29,190,.11))}.stat{padding:38px;text-align:center;border-right:1px solid var(--line)}.stat:last-child{border:0}.stat strong{font-size:42px}.stat span{display:block;margin-top:8px;color:var(--muted);font-size:12px}
+    .projects{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}.project{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:#0d0d13;min-height:360px;position:relative;transition:.3s}.project:hover{transform:translateY(-5px);box-shadow:0 28px 70px rgba(0,0,0,.42)}.project:nth-child(1){grid-column:span 7}.project:nth-child(2){grid-column:span 5}.project:nth-child(3){grid-column:span 5}.project:nth-child(4){grid-column:span 7}.mock{height:255px;padding:24px;background:radial-gradient(circle at 60% 20%,rgba(122,57,255,.26),transparent 35%),linear-gradient(140deg,#121225,#090910);display:flex;align-items:center;justify-content:center}.browser{width:90%;height:82%;border:1px solid rgba(255,255,255,.13);border-radius:12px;background:linear-gradient(160deg,#18182a,#0a0a11);box-shadow:0 25px 50px rgba(0,0,0,.4);transform:perspective(800px) rotateY(-8deg) rotateX(3deg);padding:18px}.browser .bar{height:8px;width:42%;border-radius:9px;background:#7a39ef;margin-bottom:14px}.browser .line{height:7px;border-radius:9px;background:rgba(255,255,255,.08);margin:9px 0}.project-info{padding:22px 24px}.project-info span{font-size:11px;color:#a85cff;text-transform:uppercase;font-weight:800;letter-spacing:.08em}.project-info h3{margin:8px 0 0;font-size:22px}
+    .process{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative}.process:before{content:"";position:absolute;left:8%;right:8%;top:25px;height:1px;background:linear-gradient(90deg,transparent,#9b42ff,#9b42ff,transparent)}.step{text-align:center;position:relative}.step .bubble{width:52px;height:52px;border-radius:50%;margin:auto;display:grid;place-items:center;background:#0e0e16;border:1px solid #8f43d9;box-shadow:0 0 20px rgba(146,57,255,.22);position:relative;z-index:2}.step small{display:block;color:#ad5cff;margin-top:18px}.step h4{margin:6px 0 7px}.step p{font-size:12px;line-height:1.6;color:var(--muted);padding:0 12px}
+    .cta{border:1px solid rgba(172,86,255,.28);border-radius:28px;padding:70px;background:radial-gradient(circle at 80% 50%,rgba(142,49,245,.3),transparent 28%),linear-gradient(135deg,#11111a,#08080d);position:relative;overflow:hidden}.cta h2{font-size:clamp(38px,5vw,68px);margin:0;max-width:760px;letter-spacing:-.05em}.cta p{color:var(--muted);max-width:620px;line-height:1.7}.cta .giant{position:absolute;right:50px;top:10px;font-size:230px;font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(196,120,255,.22);transform:rotate(-10deg)}
+    footer{border-top:1px solid var(--line);padding:48px 0 30px;color:#b7b7c2}.foot{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:35px}.foot h4{color:#fff;margin-top:0}.foot a{display:block;margin:10px 0;font-size:13px}.copyright{margin-top:45px;padding-top:24px;border-top:1px solid var(--line);font-size:12px;display:flex;justify-content:space-between}
+    .reveal{opacity:0;transform:translateY(24px);transition:.8s ease}.reveal.show{opacity:1;transform:none}
+    @media(max-width:980px){.navlinks{display:none}.hero{grid-template-columns:1fr;min-height:auto;padding-top:50px}.hero-visual{height:480px}.n3d{font-size:250px}.service-strip{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:repeat(2,1fr)}.projects .project{grid-column:span 12}.process{grid-template-columns:1fr;gap:28px}.process:before{display:none}.foot{grid-template-columns:1fr 1fr}.cta{padding:45px}.cta .giant{opacity:.2}}
+    @media(max-width:620px){nav{height:72px}.brand{font-size:19px}nav>.btn{padding:11px 14px}.hero{padding-top:36px}h1{font-size:48px}.lead{font-size:16px}.hero-visual{height:390px}.n3d{font-size:190px}.orbit{width:340px;height:150px}.planet{width:360px;height:360px}.service-strip,.cards,.stats{grid-template-columns:1fr}.mini,.stat{border-right:0;border-bottom:1px solid var(--line)}.stat:last-child{border-bottom:0}.section-head{display:block}.section-head p{margin-top:16px}.foot{grid-template-columns:1fr}.copyright{display:block;line-height:1.8}.cta{padding:34px 24px}.cta .giant{display:none}}
+  
+/* ===== ADVANCED MOTION UPGRADE — preserves original design ===== */
+:root{--mx:50vw;--my:50vh}
+body{
+  background:
+    radial-gradient(circle at var(--mx) var(--my),rgba(142,57,255,.075),transparent 19rem),
+    radial-gradient(circle at 68% 12%,rgba(105,27,190,.18),transparent 24%),
+    var(--bg);
+}
+.preloader-mark{
+  font-size:96px;font-weight:900;line-height:1;
+  background:linear-gradient(145deg,#f2d7ff,#9b45ff 45%,#4c0ba6 75%,#dc7dff);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 34px rgba(168,76,255,.55));
+  animation:preN 1.3s cubic-bezier(.2,.8,.2,1) infinite alternate;
+}
+@keyframes preN{from{transform:scale(.92) rotateY(-10deg);filter:drop-shadow(0 0 14px rgba(168,76,255,.25))}to{transform:scale(1.05) rotateY(10deg);filter:drop-shadow(0 0 40px rgba(168,76,255,.75))}}
+.preloader-line{width:220px;height:2px;margin:24px auto 14px;background:rgba(255,255,255,.08);overflow:hidden;border-radius:99px}
+.preloader-line span{display:block;width:45%;height:100%;background:linear-gradient(90deg,transparent,#b45eff,transparent);animation:loadSweep 1s linear infinite}
+@keyframes loadSweep{from{transform:translateX(-130%)}to{transform:translateX(350%)}}
+.preloader-text{font-size:10px;letter-spacing:.32em;color:#9c8aae}
+
+nav{
+  position:sticky;top:10px;z-index:80;
+  background:rgba(5,5,9,.52);backdrop-filter:blur(18px) saturate(140%);
+  border:1px solid rgba(255,255,255,.055);border-radius:16px;
+  margin-top:10px;padding:0 18px;
+  box-shadow:0 18px 50px rgba(0,0,0,.18);
+}
+.mark{position:relative;isolation:isolate}
+.mark:after{
+  content:"";position:absolute;inset:-8px;background:radial-gradient(circle,rgba(180,91,255,.55),transparent 65%);
+  filter:blur(8px);z-index:-1;animation:markPulse 2.6s ease-in-out infinite
+}
+@keyframes markPulse{50%{transform:scale(1.25);opacity:.55}}
+
+.hero{position:relative}
+.hero:before{
+  content:"";position:absolute;inset:4% -20% auto 54%;height:64%;pointer-events:none;
+  background:conic-gradient(from 180deg at 50% 50%,transparent,rgba(150,62,255,.08),transparent,rgba(189,91,255,.06),transparent);
+  filter:blur(36px);animation:aurora 14s linear infinite
+}
+@keyframes aurora{to{transform:rotate(360deg)}}
+.hero-copy{position:relative;z-index:4}
+.hero-copy h1{perspective:900px}
+.hero-copy h1 .motion-word{display:inline-block;opacity:0;transform:translateY(46px) rotateX(70deg);transform-origin:50% 100%;filter:blur(7px)}
+.hero-copy h1.motion-ready .motion-word{animation:titleWord .75s cubic-bezier(.2,.75,.2,1) forwards}
+@keyframes titleWord{to{opacity:1;transform:none;filter:blur(0)}}
+
+.hero-visual{isolation:isolate}
+.hero-visual:before{
+  content:"";position:absolute;width:420px;height:420px;border-radius:50%;
+  background:repeating-radial-gradient(circle,rgba(177,78,255,.13) 0 1px,transparent 1px 24px);
+  opacity:.25;animation:gridSpin 18s linear infinite;filter:blur(.2px)
+}
+@keyframes gridSpin{to{transform:rotate(360deg)}}
+.hero-visual:after{
+  content:"";position:absolute;width:82%;height:26%;bottom:48px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(149,48,255,.26),transparent 67%);filter:blur(22px);z-index:-1
+}
+
+.n3d{
+  will-change:transform,filter;
+  animation:float 5s ease-in-out infinite, nPulse 3.4s ease-in-out infinite;
+}
+@keyframes nPulse{50%{filter:drop-shadow(0 0 46px rgba(161,68,255,.72)) brightness(1.08)}}
+.n3d:after{
+  content:"";position:absolute;inset:8% 16% 12% 8%;
+  background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.55) 42%,transparent 52%);
+  mix-blend-mode:screen;clip-path:polygon(15% 0,50% 26%,82% 0,82% 100%,50% 75%,15% 100%);
+  animation:nShimmer 3.7s ease-in-out infinite;pointer-events:none
+}
+@keyframes nShimmer{0%,18%{transform:translateX(-80%);opacity:0}40%{opacity:.9}72%,100%{transform:translateX(110%);opacity:0}}
+
+.orbit{animation:orbitTilt 5.5s ease-in-out infinite}
+@keyframes orbitTilt{50%{transform:rotate(-13deg) scale(1.04);filter:drop-shadow(0 0 18px rgba(181,92,255,.45))}}
+.orbit:before,.orbit:after{
+  content:"";position:absolute;width:6px;height:6px;border-radius:50%;background:#d894ff;box-shadow:0 0 16px #b862ff
+}
+.orbit:before{left:14%;top:18%;animation:spark 2.3s ease-in-out infinite}
+.orbit:after{right:11%;bottom:20%;animation:spark 2.8s ease-in-out infinite .4s}
+@keyframes spark{50%{transform:scale(2);opacity:.35}}
+
+.rock:before,.rock:after{
+  content:"";position:absolute;inset:0;border-radius:50%;pointer-events:none
+}
+.rock:before{background:linear-gradient(112deg,transparent 22%,rgba(190,92,255,.3) 23%,transparent 24%,transparent 55%,rgba(128,44,255,.25) 56%,transparent 58%);animation:crack 4s ease-in-out infinite}
+.rock:after{box-shadow:inset 0 -14px 26px rgba(0,0,0,.45),0 0 38px rgba(149,54,255,.3)}
+@keyframes crack{50%{filter:brightness(1.5)}}
+
+.service-strip,.stats,.project,.card,.cta,.process .bubble{
+  transform-style:preserve-3d;
+}
+.service-strip{box-shadow:0 26px 80px rgba(0,0,0,.26)}
+.mini{transition:.35s ease;position:relative}
+.mini:after{content:"";position:absolute;inset:auto 14px 0;height:1px;background:linear-gradient(90deg,transparent,#a24eff,transparent);transform:scaleX(0);transition:.35s}
+.mini:hover{background:rgba(151,63,255,.055);transform:translateY(-4px)}
+.mini:hover:after{transform:scaleX(1)}
+
+.card,.project,.stat,.mini{will-change:transform}
+.card .icon-orb{
+  position:absolute;width:90px;height:90px;border-radius:50%;right:-18px;top:-18px;
+  background:radial-gradient(circle,rgba(173,76,255,.22),transparent 65%);filter:blur(8px)
+}
+.card:hover .arrow{transform:translate(4px,-4px);text-shadow:0 0 18px #bb6cff}
+.card .arrow{transition:.3s}
+
+.project{isolation:isolate}
+.project:before{
+  content:"";position:absolute;inset:-1px;z-index:2;pointer-events:none;border-radius:20px;
+  background:linear-gradient(120deg,transparent 30%,rgba(187,91,255,.18),transparent 55%);
+  transform:translateX(-120%);transition:transform .8s ease
+}
+.project:hover:before{transform:translateX(120%)}
+.project .browser{transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s}
+.project:hover .browser{transform:perspective(800px) rotateY(0deg) rotateX(0deg) scale(1.035);box-shadow:0 30px 70px rgba(0,0,0,.52)}
+
+.stats{position:relative}
+.stats:after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(151,62,255,.06),transparent);
+  transform:translateX(-100%);animation:statSweep 7s ease-in-out infinite
+}
+@keyframes statSweep{50%,100%{transform:translateX(100%)}}
+.stat strong{background:linear-gradient(180deg,#fff,#bd87ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+.process .bubble{transition:.35s}
+.step:hover .bubble{transform:translateY(-7px) rotate(6deg) scale(1.08);box-shadow:0 0 32px rgba(146,57,255,.48)}
+.step:hover h4{color:#dcb9ff}
+
+.cta:before{
+  content:"";position:absolute;width:280px;height:280px;border:1px solid rgba(183,91,255,.18);border-radius:50%;right:10%;top:50%;transform:translateY(-50%);
+  box-shadow:0 0 50px rgba(147,58,255,.09),inset 0 0 50px rgba(147,58,255,.06);
+  animation:ctaRing 5s ease-in-out infinite
+}
+.cta:after{
+  content:"";position:absolute;width:190px;height:190px;border:1px solid rgba(218,125,255,.16);border-radius:50%;right:13%;top:50%;transform:translateY(-50%) rotateX(68deg);
+  animation:ctaSpin 8s linear infinite
+}
+@keyframes ctaRing{50%{transform:translateY(-50%) scale(1.12);opacity:.5}}
+@keyframes ctaSpin{to{transform:translateY(-50%) rotateX(68deg) rotateZ(360deg)}}
+
+.btn{position:relative;overflow:hidden;will-change:transform}
+.btn:after{
+  content:"";position:absolute;inset:-2px;background:linear-gradient(110deg,transparent 25%,rgba(255,255,255,.28),transparent 55%);
+  transform:translateX(-140%);transition:.65s
+}
+.btn:hover:after{transform:translateX(140%)}
+
+.reveal{opacity:0;transform:translateY(38px) scale(.985);filter:blur(6px);transition:opacity .9s cubic-bezier(.2,.75,.2,1),transform .9s cubic-bezier(.2,.75,.2,1),filter .9s}
+.reveal.show{opacity:1;transform:none;filter:blur(0)}
+.card.reveal-child,.project.reveal-child,.mini.reveal-child,.stat.reveal-child{opacity:0;transform:translateY(24px);transition:.7s cubic-bezier(.2,.75,.2,1)}
+.reveal.show .reveal-child{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}
+}
+
+
+/* ===== NEXORA V9 GLOBAL EXPERIENCE LAYER ===== */
+.nx-page-loader{
+ position:fixed;inset:0;z-index:99999;background:#050507;display:grid;place-items:center;
+ transition:opacity .65s ease,visibility .65s ease
+}
+.nx-page-loader.hide{opacity:0;visibility:hidden}
+.nx-loader-inner{text-align:center}
+.nx-loader-logo{
+ width:86px;height:86px;margin:0 auto 22px;position:relative;filter:drop-shadow(0 0 28px rgba(162,68,255,.55));
+ animation:nxLoaderFloat 1.8s ease-in-out infinite
+}
+.nx-loader-logo:before{
+ content:"";position:absolute;inset:5px;background:linear-gradient(135deg,#d89cff,#8f3cff 46%,#4d13ba);
+ clip-path:polygon(0 0,30% 0,70% 58%,70% 0,100% 0,100% 100%,70% 100%,30% 42%,30% 100%,0 100%)
+}
+@keyframes nxLoaderFloat{50%{transform:translateY(-8px) rotateY(12deg)}}
+.nx-loader-bar{width:220px;height:2px;background:rgba(255,255,255,.07);overflow:hidden;border-radius:99px}
+.nx-loader-bar span{display:block;width:42%;height:100%;background:linear-gradient(90deg,transparent,#bb67ff,transparent);animation:nxSweep 1.05s linear infinite}
+@keyframes nxSweep{from{transform:translateX(-140%)}to{transform:translateX(360%)}}
+.nx-loader-text{margin-top:13px;font-size:10px;letter-spacing:.26em;color:#9385a3}
+
+.nx-transition{
+ position:fixed;inset:0;z-index:99998;pointer-events:none;display:grid;grid-template-columns:repeat(4,1fr)
+}
+.nx-transition span{background:#08080d;transform:translateY(100%);transition:transform .48s cubic-bezier(.7,0,.2,1)}
+.nx-transition.active span{transform:translateY(0)}
+.nx-transition span:nth-child(2){transition-delay:.04s}.nx-transition span:nth-child(3){transition-delay:.08s}.nx-transition span:nth-child(4){transition-delay:.12s}
+
+.nx-menu-btn{
+ display:none;width:44px;height:44px;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.03);
+ border-radius:12px;position:relative;cursor:pointer
+}
+.nx-menu-btn span{position:absolute;left:11px;right:11px;height:2px;background:#eee;border-radius:9px;transition:.3s}
+.nx-menu-btn span:nth-child(1){top:14px}.nx-menu-btn span:nth-child(2){top:21px}.nx-menu-btn span:nth-child(3){top:28px}
+.nx-menu-btn.open span:nth-child(1){top:21px;transform:rotate(45deg)}
+.nx-menu-btn.open span:nth-child(2){opacity:0}
+.nx-menu-btn.open span:nth-child(3){top:21px;transform:rotate(-45deg)}
+
+.nx-mobile-menu{
+ position:fixed;inset:0;z-index:9990;background:rgba(5,5,8,.94);backdrop-filter:blur(24px);
+ opacity:0;visibility:hidden;transition:.35s;display:grid;place-items:center;padding:90px 24px 34px
+}
+.nx-mobile-menu.open{opacity:1;visibility:visible}
+.nx-mobile-menu-inner{width:min(520px,100%);display:grid;gap:10px}
+.nx-mobile-menu a{
+ padding:17px 18px;border-radius:14px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.02);
+ color:white;text-decoration:none;font-size:21px;font-weight:800;letter-spacing:-.02em;transition:.3s
+}
+.nx-mobile-menu a:hover{background:rgba(139,57,255,.1);border-color:rgba(170,79,255,.3);transform:translateX(5px)}
+.nx-mobile-caption{color:#8f8f9f;font-size:12px;margin:12px 0 4px;letter-spacing:.12em}
+
+.nx-fade-up{opacity:0;transform:translateY(28px);filter:blur(5px);transition:.8s cubic-bezier(.2,.8,.2,1)}
+.nx-fade-up.nx-in{opacity:1;transform:none;filter:blur(0)}
+
+@media(max-width:1050px){
+ nav .links{display:none!important}
+ .nx-menu-btn{display:block}
+ nav>.btn,nav>.cta{display:none!important}
+}
+@media(max-width:700px){
+ body{background-attachment:scroll!important}
+ .hero,.section{border-radius:18px!important}
+ .heroCopy,.hero-copy{padding-left:22px!important;padding-right:22px!important}
+ .pad,.sectionPad{padding-left:18px!important;padding-right:18px!important}
+ .nx-transition{grid-template-columns:repeat(3,1fr)}
+ .nx-transition span:nth-child(4){display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto!important}
+ .nx-page-loader,.nx-transition{display:none!important}
+ *,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+
+
+/* ===== NEXORA REAL WEBGL / THREE.JS ===== */
+.hero-visual,.heroVisual{position:relative}
+.nx-webgl-shell{
+ position:absolute;inset:0;z-index:3;pointer-events:auto;overflow:hidden;
+ opacity:0;transform:scale(.985);transition:opacity .8s ease,transform .8s ease
+}
+.nx-three-ready .nx-webgl-shell{opacity:1;transform:none}
+.nx-webgl-canvas{display:block;width:100%;height:100%;outline:none}
+.nx-webgl-vignette{
+ position:absolute;inset:0;pointer-events:none;
+ background:
+ radial-gradient(circle at 50% 48%,transparent 0 34%,rgba(5,5,9,.10) 60%,rgba(5,5,9,.42) 100%),
+ linear-gradient(90deg,rgba(5,5,9,.12),transparent 28%,transparent 72%,rgba(5,5,9,.08));
+}
+.nx-three-fallback-hidden{
+ opacity:0!important;visibility:hidden!important;pointer-events:none!important;
+ transition:opacity .45s ease!important
+}
+@media(max-width:700px){
+ .nx-webgl-shell{inset:2% 0 0}
+}
+@media(prefers-reduced-motion:reduce){
+ .nx-webgl-shell{pointer-events:none}
+}
+
+
+/* ===== V11 CINEMATIC SCROLL STORY ===== */
+.nx-story-indicator{
+ position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:60;
+ display:grid;gap:8px;padding:10px 7px;border-radius:999px;
+ background:rgba(7,7,12,.42);backdrop-filter:blur(12px);
+ border:1px solid rgba(255,255,255,.06)
+}
+.nx-story-indicator span{
+ width:25px;height:25px;border-radius:50%;display:grid;place-items:center;
+ font-size:8px;color:#666679;border:1px solid transparent;transition:.3s
+}
+.nx-story-indicator span.active{
+ color:#e6ccff;border-color:rgba(177,78,255,.35);
+ background:rgba(139,55,255,.12);box-shadow:0 0 18px rgba(146,57,255,.18)
+}
+@media(max-width:900px){.nx-story-indicator{display:none}}
+
+
+/* ===== V12 FINAL PREMIUM DETAIL PASS ===== */
+:root{
+  --nx-focus:0 0 0 3px rgba(171,80,255,.18),0 0 0 1px rgba(190,110,255,.42);
+}
+body{
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+::selection{background:rgba(154,71,255,.35);color:white}
+a,button,input,textarea,select{outline:none}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{
+  box-shadow:var(--nx-focus)!important;
+}
+.btn,.cta,.ghost{
+  letter-spacing:-.01em;
+  transform:translateZ(0);
+}
+.btn strong,.cta strong{font-weight:800}
+a{transition:color .25s ease,opacity .25s ease,transform .25s ease}
+footer a:hover{color:#d6b3ff;transform:translateX(3px)}
+h1,h2,h3,h4{font-feature-settings:"kern","liga","clig","calt"}
+h1{max-width:16ch}
+.hero p,.sub{max-width:62ch}
+.section,.hero,.card,.project,.service,.storyCard,.principle,.expectCard,.quickCard{
+  box-shadow:0 22px 70px rgba(0,0,0,.24);
+}
+.section:has(.head),.hero{isolation:isolate}
+.nx-premium-divider{
+  height:1px;width:100%;background:linear-gradient(90deg,transparent,rgba(177,82,255,.22),transparent);margin:28px 0;
+}
+.nx-trust-strip{
+  display:flex;gap:18px;flex-wrap:wrap;align-items:center;
+  margin-top:24px;color:#8f8f9f;font-size:12px
+}
+.nx-trust-strip span{
+  display:inline-flex;align-items:center;gap:7px;padding:8px 10px;border:1px solid rgba(255,255,255,.06);
+  border-radius:999px;background:rgba(255,255,255,.018)
+}
+.nx-trust-strip i{
+  width:6px;height:6px;border-radius:50%;background:#a84fff;box-shadow:0 0 12px rgba(168,79,255,.7)
+}
+.nx-footer-legal{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+.nx-footer-legal a{font-size:12px}
+.nx-sr-only{
+ position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;
+ overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important
+}
+@media(max-width:700px){
+ h1{max-width:none}
+ .hero p,.sub{font-size:15px!important;line-height:1.65!important}
+ .nx-trust-strip{gap:8px}
+ .nx-trust-strip span{font-size:11px}
+}
+
+</style>
+
+<meta name="theme-color" content="#050507">
+<meta name="robots" content="index,follow">
+<link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+<link rel="canonical" href="{{ site_url }}{{ request.path }}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NEXORA">
+<meta property="og:title" content="NEXORA — Premium Websites, Apps & Digital Experiences">
+<meta property="og:description" content="Nexora builds premium websites, web apps, mobile apps, 3D experiences, e-commerce platforms and custom software.">
+<meta property="og:url" content="{{ site_url }}{{ request.path }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NEXORA — Premium Websites, Apps & Digital Experiences">
+<meta name="twitter:description" content="Nexora builds premium websites, web apps, mobile apps, 3D experiences, e-commerce platforms and custom software.">
+
+
+<style>
+.n3d,.orbit,.ring,.portal,.portalCore,.constellation,.pillar,.stage,.panel3d,.holo,.core,.orb,.cube,.shard{
+ animation-play-state:var(--nx-paused,running)!important;
+}
+@media(max-width:700px){
+ #fx{opacity:.55}
+ .glow,.cursorGlow,.cursor{display:none!important}
+}
+</style>
+
+</head>
+<body data-nx-page="home">
+<a class="nx-skip nx-sr-only" href="#main-content">Skip to main content</a>
+<canvas id="particleCanvas" aria-hidden="true" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:.75"></canvas>
+<div id="pageProgress" style="position:fixed;left:0;top:0;height:2px;width:0;background:linear-gradient(90deg,#8b39ff,#d875ff);box-shadow:0 0 18px #a94cff;z-index:9999"></div>
+<div id="preloader" style="position:fixed;inset:0;z-index:10000;background:#050507;display:grid;place-items:center;transition:opacity .8s ease,visibility .8s ease">
+  <div style="text-align:center">
+    <div class="preloader-mark">N</div>
+    <div class="preloader-line"><span></span></div>
+    <div class="preloader-text">ENTERING NEXORA</div>
+  </div>
+</div>
+<div class="noise"></div><div class="cursor-glow" id="glow"></div>
+<div class="wrap">
+  <nav aria-label="Primary navigation">
+    <a class="brand" href="#"><span class="mark">N</span>NEXORA</a>
+    <div class="navlinks"><a href="services.html">Services</a><a href="work.html">Work</a><a href="index.html#process">Process</a><a href="about.html">About</a><a href="contact.html">Contact</a></div>
+    <a class="btn primary" href="contact.html">Let's Talk <span>↗</span></a>
+  </nav>
+
+  <main id="main-content">
+    <section class="hero">
+      <div class="hero-copy reveal">
+        <span class="eyebrow"><i class="dot"></i> Digital solutions. Limitless possibilities.</span>
+        <h1>We Don't Just Build Websites.<br><span class="grad">We Build Digital Experiences.</span></h1>
+        <p class="lead">Nexora is your growth partner for powerful websites, mobile apps, immersive 3D experiences, e-commerce and custom software engineered to make businesses stand out.</p>
+        <div class="actions"><a class="btn primary" href="contact.html">Start Your Project <span>→</span></a><a class="btn" href="work.html">Explore Our Work <span>↗</span></a></div>
+        <div class="trust"><div class="avatars"><span>UX</span><span>DEV</span><span>3D</span><span>AI</span></div><div><div>Built for ambitious businesses</div><div class="stars">★★★★★</div></div></div>
+      </div>
+      <div class="hero-visual reveal" id="heroVisual"><div class="planet"></div><div class="orbit"><div class="orb"></div></div><div class="n3d" id="n3d">N</div><div class="rock"></div></div>
+    </section>
+
+    <div class="service-strip reveal">
+      <div class="mini"><div class="icon">◫</div><b>Web Design</b><span>Premium responsive interfaces</span></div>
+      <div class="mini"><div class="icon">⌘</div><b>Web Development</b><span>Fast, secure and scalable</span></div>
+      <div class="mini"><div class="icon">▯</div><b>Mobile Apps</b><span>Android, iOS & cross-platform</span></div>
+      <div class="mini"><div class="icon">◇</div><b>3D Experiences</b><span>Immersive interactive websites</span></div>
+      <div class="mini"><div class="icon">🛒</div><b>E-Commerce</b><span>Stores built to convert</span></div>
+      <div class="mini"><div class="icon">⬡</div><b>Custom Software</b><span>Solutions built around your business</span></div>
+    </div>
+
+    <section id="services" class="reveal">
+      <div class="section-head"><div><div class="kicker">What we do</div><h2>Complete Digital Solutions Under One Roof.</h2></div><p>From simple business websites to complex platforms and interactive 3D experiences, we combine design, engineering and strategy.</p></div>
+      <div class="cards">
+        <article class="card"><span class="num">01</span><h3>Website Design</h3><p>Conversion-focused interfaces that look premium, communicate clearly and work beautifully on every screen.</p><span class="arrow">↗</span></article>
+        <article class="card"><span class="num">02</span><h3>Dynamic Development</h3><p>Dashboards, portals, booking systems, business platforms and scalable web applications.</p><span class="arrow">↗</span></article>
+        <article class="card"><span class="num">03</span><h3>3D & Interactive</h3><p>WebGL-style experiences, product showcases and immersive storytelling that visitors remember.</p><span class="arrow">↗</span></article>
+        <article class="card"><span class="num">04</span><h3>Mobile Applications</h3><p>Professional mobile products designed for speed, usability and long-term growth.</p><span class="arrow">↗</span></article>
+      </div>
+    </section>
+
+    <div class="stats reveal"><div class="stat"><strong>∞</strong><span>Creative Possibilities</span></div><div class="stat"><strong>360°</strong><span>Digital Capability</span></div><div class="stat"><strong>24/7</strong><span>Business Presence</span></div><div class="stat"><strong>100%</strong><span>Custom-Built Approach</span></div></div>
+
+    <section id="work" class="reveal">
+      <div class="section-head"><div><div class="kicker">Selected experiences</div><h2>Work Designed To Make People Stop Scrolling.</h2></div><p>These are concept showcases for Nexora's visual direction. Replace them with real client case studies as the portfolio grows.</p></div>
+      <div class="projects">
+        <article class="project"><div class="mock"><div class="browser"><div class="bar"></div><div class="line" style="width:76%"></div><div class="line" style="width:54%"></div><div class="line" style="width:88%"></div><div class="line" style="height:65px;margin-top:20px"></div></div></div><div class="project-info"><span>Fintech platform</span><h3>ZenithPay — Dashboard Experience</h3></div></article>
+        <article class="project"><div class="mock" style="background:radial-gradient(circle at 50% 10%,rgba(87,135,255,.25),transparent 35%),linear-gradient(150deg,#141a28,#090a0d)"><div class="browser"><div class="bar" style="width:55%"></div><div class="line"></div><div class="line" style="width:65%"></div><div class="line" style="height:75px;margin-top:18px"></div></div></div><div class="project-info"><span>Luxury real estate</span><h3>Luxora — Property Experience</h3></div></article>
+        <article class="project"><div class="mock" style="background:radial-gradient(circle at 50% 40%,rgba(255,89,182,.18),transparent 40%),#0b0c12"><div class="browser"><div class="bar"></div><div class="line" style="width:60%"></div><div class="line" style="height:92px"></div></div></div><div class="project-info"><span>Mobile application</span><h3>FitZone — Fitness Platform</h3></div></article>
+        <article class="project"><div class="mock" style="background:radial-gradient(circle at 50% 30%,rgba(167,93,255,.24),transparent 38%),linear-gradient(145deg,#16131e,#09090d)"><div class="n3d" style="font-size:150px;animation:none">N</div></div><div class="project-info"><span>3D interactive experience</span><h3>MetaBuild — Architecture in Motion</h3></div></article>
+      </div>
+    </section>
+
+    <section id="process" class="reveal">
+      <div class="section-head"><div><div class="kicker">Our process</div><h2>A Simple Process. Powerful Results.</h2></div><p>Every project follows a clear path from business goals to launch, iteration and long-term support.</p></div>
+      <div class="process"><div class="step"><div class="bubble">⌕</div><small>01</small><h4>Discover</h4><p>Understand goals, audience and requirements.</p></div><div class="step"><div class="bubble">✧</div><small>02</small><h4>Plan</h4><p>Define strategy, structure and roadmap.</p></div><div class="step"><div class="bubble">◈</div><small>03</small><h4>Design</h4><p>Create premium interfaces and interactions.</p></div><div class="step"><div class="bubble">⌘</div><small>04</small><h4>Develop</h4><p>Build fast, secure and scalable products.</p></div><div class="step"><div class="bubble">↗</div><small>05</small><h4>Deliver</h4><p>Launch, optimize and support growth.</p></div></div>
+    </section>
+
+    <section id="contact" class="reveal"><div class="cta"><div class="giant">N</div><div class="kicker">Have a project in mind?</div><h2>Let's Build Something <span class="grad">Impossible To Ignore.</span></h2><p>Tell us what you want to build. Nexora will turn the idea into a digital experience engineered to impress customers and move your business forward.</p><div class="actions"><a class="btn primary" href="mailto:hello@nexora.example">Start Your Project →</a><a class="btn" href="tel:+910000000000">Schedule a Call</a></div></div></section>
+  </main>
+
+  <footer id="about"><div class="foot"><div><a class="brand" href="#"><span class="mark">N</span>NEXORA</a><p style="max-width:330px;line-height:1.7;font-size:13px">Digital experiences built to inspire, engage and drive real business results.</p></div><div><h4>Services</h4><a href="#services">Web Design</a><a href="#services">Development</a><a href="#services">Mobile Apps</a><a href="#services">3D Experiences</a></div><div><h4>Company</h4><a href="work.html">Work</a><a href="#process">Process</a><a href="about.html">About</a><a href="contact.html">Contact</a></div><div><h4>Connect</h4><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a><a href="mailto:hello@nexora.example">Email</a></div></div><div class="copyright"><span>© 2026 Nexora. All rights reserved.</span><span>Built for businesses that refuse to look ordinary.</span></div></footer>
+</div>
+<script>
+  const glow=document.getElementById('glow');
+  window.addEventListener('pointermove',e=>{glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px'});
+  const visual=document.getElementById('heroVisual'), n=document.getElementById('n3d');
+  visual.addEventListener('pointermove',e=>{const r=visual.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5;const y=(e.clientY-r.top)/r.height-.5;n.style.transform=`rotateY(${x*20}deg) rotateX(${-y*16}deg) translateY(-6px)`});
+  visual.addEventListener('pointerleave',()=>n.style.transform='');
+  const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+<script>
+(function(){
+  // Preloader
+  const pre = document.getElementById('preloader');
+  window.addEventListener('load',()=>setTimeout(()=>{
+    pre.style.opacity='0'; pre.style.visibility='hidden';
+    const h1=document.querySelector('.hero h1'); if(h1) h1.classList.add('motion-ready');
+  },650));
+
+  // Mouse ambient light
+  window.addEventListener('pointermove',e=>{
+    document.documentElement.style.setProperty('--mx',e.clientX+'px');
+    document.documentElement.style.setProperty('--my',e.clientY+'px');
+  });
+
+  // Split hero headline into animated words without destroying gradient span
+  const h1=document.querySelector('.hero h1');
+  if(h1){
+    [...h1.childNodes].forEach(node=>{
+      if(node.nodeType===3){
+        const frag=document.createDocumentFragment();
+        node.textContent.split(/(\s+)/).forEach(t=>{
+          if(!t.trim()){frag.appendChild(document.createTextNode(t));return}
+          const s=document.createElement('span');s.className='motion-word';s.textContent=t;frag.appendChild(s)
+        });
+        h1.replaceChild(frag,node);
+      }else if(node.nodeType===1 && node.tagName!=='BR'){
+        const words=node.textContent.split(/(\s+)/);
+        node.textContent='';
+        words.forEach(t=>{
+          if(!t.trim()){node.appendChild(document.createTextNode(t));return}
+          const s=document.createElement('span');s.className='motion-word';s.textContent=t;node.appendChild(s)
+        });
+      }
+    });
+    let delay=0;
+    h1.querySelectorAll('.motion-word').forEach(w=>{w.style.animationDelay=(delay+=.055)+'s'});
+  }
+
+  // Stagger children
+  document.querySelectorAll('.service-strip .mini,.cards .card,.stats .stat,.projects .project').forEach(el=>el.classList.add('reveal-child'));
+  document.querySelectorAll('.reveal').forEach(parent=>{
+    parent.querySelectorAll('.reveal-child').forEach((el,i)=>el.style.transitionDelay=(i*.07)+'s');
+  });
+
+  // Magnetic buttons
+  document.querySelectorAll('.btn').forEach(btn=>{
+    btn.addEventListener('pointermove',e=>{
+      const r=btn.getBoundingClientRect();
+      const x=e.clientX-r.left-r.width/2, y=e.clientY-r.top-r.height/2;
+      btn.style.transform=`translate(${x*.08}px,${y*.08}px)`;
+    });
+    btn.addEventListener('pointerleave',()=>btn.style.transform='');
+  });
+
+  // 3D tilt cards/projects while preserving original style
+  document.querySelectorAll('.card,.project').forEach(card=>{
+    card.addEventListener('pointermove',e=>{
+      const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+      card.style.transform=`perspective(900px) rotateX(${-y*4.5}deg) rotateY(${x*5}deg) translateY(-5px)`;
+    });
+    card.addEventListener('pointerleave',()=>card.style.transform='');
+  });
+
+  // Scroll progress
+  const progress=document.getElementById('pageProgress');
+  const updateProgress=()=>{
+    const max=document.documentElement.scrollHeight-innerHeight;
+    progress.style.width=(max?scrollY/max*100:0)+'%';
+  };
+  updateProgress(); addEventListener('scroll',updateProgress,{passive:true});
+
+  // Hero parallax
+  const hero=document.querySelector('.hero');
+  const visual=document.getElementById('heroVisual');
+  window.addEventListener('scroll',()=>{
+    const y=Math.min(scrollY,900);
+    if(hero){
+      const copy=hero.querySelector('.hero-copy');
+      if(copy) copy.style.transform=`translateY(${y*.055}px)`;
+    }
+    if(visual) visual.style.transform=`translateY(${y*.025}px)`;
+  },{passive:true});
+
+  // Canvas particles with soft connecting lines
+  const c=document.getElementById('particleCanvas'),ctx=c.getContext('2d');
+  let dpr=Math.min(devicePixelRatio||1,2),W=0,H=0,pts=[];
+  function size(){
+    W=c.width=innerWidth*dpr;H=c.height=innerHeight*dpr;
+    pts=Array.from({length:Math.min(115,Math.floor(innerWidth/10))},()=>({
+      x:Math.random()*W,y:Math.random()*H,
+      vx:(Math.random()-.5)*.12*dpr,vy:(Math.random()-.5)*.12*dpr,
+      r:(Math.random()*1.3+.35)*dpr,a:Math.random()*.5+.12
+    }));
+  }
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    for(let i=0;i<pts.length;i++){
+      const p=pts[i];p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(177,90,255,${p.a})`;ctx.shadowBlur=10*dpr;ctx.shadowColor='rgba(140,56,255,.55)';ctx.fill();
+      ctx.shadowBlur=0;
+      for(let j=i+1;j<pts.length;j++){
+        const q=pts[j],dx=p.x-q.x,dy=p.y-q.y,dist=Math.hypot(dx,dy);
+        if(dist<95*dpr){
+          ctx.strokeStyle=`rgba(145,62,255,${(1-dist/(95*dpr))*.045})`;
+          ctx.lineWidth=.5*dpr;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  size();frame();addEventListener('resize',size);
+
+  // Subtle section spotlight follows pointer
+  document.querySelectorAll('.card,.project,.cta').forEach(el=>{
+    el.addEventListener('pointermove',e=>{
+      const r=el.getBoundingClientRect();
+      el.style.backgroundImage=`radial-gradient(circle at ${e.clientX-r.left}px ${e.clientY-r.top}px,rgba(152,66,255,.09),transparent 180px),${getComputedStyle(el).backgroundImage}`;
+    },{passive:true});
+  });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Loader
+  const loader=document.createElement("div");
+  loader.className="nx-page-loader";
+  loader.innerHTML='<div class="nx-loader-inner"><div class="nx-loader-logo"></div><div class="nx-loader-bar"><span></span></div><div class="nx-loader-text">NEXORA EXPERIENCE</div></div>';
+  document.body.prepend(loader);
+
+  const transition=document.createElement("div");
+  transition.className="nx-transition";
+  transition.innerHTML="<span></span><span></span><span></span><span></span>";
+  document.body.appendChild(transition);
+
+  window.addEventListener("load",()=>setTimeout(()=>loader.classList.add("hide"),450));
+
+  // Mobile menu
+  const nav=document.querySelector("nav");
+  if(nav){
+    const btn=document.createElement("button");
+    btn.className="nx-menu-btn";
+    btn.setAttribute("aria-label","Open navigation");
+    btn.innerHTML="<span></span><span></span><span></span>";
+    nav.appendChild(btn);
+
+    const menu=document.createElement("div");
+    menu.className="nx-mobile-menu";
+    const links=[
+      ["Home","/"],
+      ["Services","/services"],
+      ["Work","/work"],
+      ["About","/about"],
+      ["Start a Project","/contact"]
+    ];
+    menu.innerHTML='<div class="nx-mobile-menu-inner"><div class="nx-mobile-caption">NEXORA / NAVIGATION</div>'+
+      links.map(([n,h])=>`<a href="${h}">${n}<span style="float:right;color:#b86cff">↗</span></a>`).join("")+
+      '</div>';
+    document.body.appendChild(menu);
+
+    const toggle=()=>{btn.classList.toggle("open");menu.classList.toggle("open");document.body.style.overflow=menu.classList.contains("open")?"hidden":""};
+    btn.addEventListener("click",toggle);
+    menu.addEventListener("click",e=>{if(e.target===menu)toggle()});
+  }
+
+  // Cinematic internal navigation
+  document.addEventListener("click",e=>{
+    const a=e.target.closest("a");
+    if(!a)return;
+    const href=a.getAttribute("href");
+    if(!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:") ||
+       href.startsWith("https://wa.me") || a.target==="_blank") return;
+    const url=new URL(a.href,location.href);
+    if(url.origin!==location.origin)return;
+    e.preventDefault();
+    transition.classList.add("active");
+    setTimeout(()=>location.href=url.href,560);
+  });
+
+  // Generic reveal for key page blocks
+  const blocks=document.querySelectorAll(".section,.project,.card,.principle,.expectCard,.quickCard,.storyCard");
+  blocks.forEach(x=>x.classList.add("nx-fade-up"));
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add("nx-in");io.unobserve(e.target)}
+  }),{threshold:.08});
+  blocks.forEach(x=>io.observe(x));
+
+  // Better touch: disable aggressive tilt on coarse pointers
+  if(matchMedia("(pointer: coarse)").matches){
+    document.querySelectorAll(".card,.project,.service,.principle,.expectCard,.storyCard").forEach(el=>{
+      el.style.transform="";
+      el.onpointermove=null;
+    });
+  }
+
+  // Global visibility pause hint for animation-heavy pages
+  document.addEventListener("visibilitychange",()=>{
+    document.documentElement.style.setProperty("--nx-paused",document.hidden?"paused":"running");
+  });
+})();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='nexora-three.js') }}"></script>
+
+
+<script>window.__NEXORA_SCROLL_STORY_ACTIVE__=true;</script>
+<script src="{{ url_for('static', filename='nexora-scroll-story.js') }}"></script>
+
+</body>
+</html>

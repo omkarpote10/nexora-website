@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>About NEXORA — Strategy, Design & Engineering</title>
+<meta name="description" content="Learn how Nexora combines strategy, premium design, purposeful motion and engineering to build digital experiences.">
+<style>
+:root{
+ --bg:#050507;--panel:#0b0b12;--text:#f7f7fb;--muted:#9c9cab;
+ --line:rgba(255,255,255,.08);--p:#8e3cff;--p2:#c169ff;--shadow:0 28px 80px rgba(0,0,0,.35)
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{
+ margin:0;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ background:
+ radial-gradient(circle at 80% 8%,rgba(139,50,255,.15),transparent 27%),
+ radial-gradient(circle at 9% 38%,rgba(84,26,182,.10),transparent 24%),var(--bg);
+ overflow-x:hidden
+}
+body:before{
+ content:"";position:fixed;inset:0;pointer-events:none;z-index:90;
+ background-image:linear-gradient(rgba(255,255,255,.016) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.016) 1px,transparent 1px);
+ background-size:42px 42px;mask-image:linear-gradient(to bottom,black,transparent 90%)
+}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.glow{position:fixed;width:430px;height:430px;border-radius:50%;background:radial-gradient(circle,rgba(141,61,255,.11),transparent 68%);filter:blur(8px);transform:translate(-50%,-50%);pointer-events:none;z-index:0}
+.progress{position:fixed;left:0;top:0;width:0;height:2px;background:linear-gradient(90deg,var(--p),var(--p2));box-shadow:0 0 20px var(--p);z-index:999}
+.wrap{width:min(1440px,94vw);margin:auto;position:relative;z-index:2}
+nav{
+ position:sticky;top:12px;z-index:80;width:min(1440px,94vw);margin:14px auto 0;
+ display:flex;align-items:center;justify-content:space-between;padding:14px 16px 14px 20px;
+ border:1px solid var(--line);border-radius:17px;background:rgba(5,5,9,.58);backdrop-filter:blur(18px) saturate(145%);
+ box-shadow:0 18px 60px rgba(0,0,0,.25)
+}
+.brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:.12em;color:white;text-decoration:none}
+.logo{width:34px;height:34px;position:relative;filter:drop-shadow(0 0 16px rgba(150,56,255,.65))}
+.logo:before{content:"";position:absolute;inset:3px;background:linear-gradient(135deg,#d18bff,#8b38ff 45%,#5517ce);
+ clip-path:polygon(0 0,30% 0,70% 58%,70% 0,100% 0,100% 100%,70% 100%,30% 42%,30% 100%,0 100%)}
+.links{display:flex;gap:26px;align-items:center}.links a{color:#d5d5df;text-decoration:none;font-size:14px;position:relative}
+.links a:after{content:"";position:absolute;height:2px;left:0;right:100%;bottom:-7px;background:linear-gradient(90deg,var(--p),var(--p2));transition:.3s}
+.links a:hover:after,.links a.active:after{right:0}
+.btn{
+ border:none;cursor:pointer;border-radius:12px;padding:13px 19px;font-weight:800;color:white;transition:.28s;
+ background:linear-gradient(135deg,#9b43ff,#5b1fdf);box-shadow:0 10px 30px rgba(118,46,255,.28);position:relative;overflow:hidden;text-decoration:none;display:inline-flex;align-items:center;justify-content:center
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 15px 44px rgba(131,54,255,.45)}
+.btn.ghost{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.12);box-shadow:none}
+.btn:after{content:"";position:absolute;inset:-3px;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.28),transparent 55%);transform:translateX(-140%);transition:.65s}.btn:hover:after{transform:translateX(140%)}
+.hero{
+ min-height:680px;margin-top:18px;border:1px solid var(--line);border-radius:28px;overflow:hidden;
+ display:grid;grid-template-columns:1.02fr .98fr;align-items:center;
+ background:
+ linear-gradient(90deg,rgba(6,6,11,.97),rgba(6,6,11,.72)),
+ radial-gradient(circle at 80% 45%,rgba(139,53,255,.24),transparent 38%);
+ position:relative
+}
+.heroCopy{padding:80px 0 80px 70px;position:relative;z-index:5}
+.kicker{display:inline-flex;align-items:center;gap:9px;font-size:11px;letter-spacing:.15em;color:#ca90ff;text-transform:uppercase}
+.kicker i{width:7px;height:7px;border-radius:50%;background:#ae55ff;box-shadow:0 0 14px #ae55ff}
+h1{font-size:clamp(54px,6.7vw,101px);line-height:.93;letter-spacing:-.055em;margin:20px 0 24px;max-width:790px}
+.grad{background:linear-gradient(90deg,#fff,#c57dff 45%,#7d32ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p,.sub{color:var(--muted);font-size:17px;line-height:1.75;max-width:650px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.heroVisual{position:relative;height:100%;min-height:620px;display:grid;place-items:center;perspective:1200px;overflow:hidden}
+.constellation{width:520px;height:520px;position:relative;transform-style:preserve-3d}
+.constellation:before,.constellation:after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(176,80,255,.22);inset:9%;animation:spin 13s linear infinite}
+.constellation:after{inset:21%;transform:rotateX(68deg);animation-direction:reverse;animation-duration:9s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pillar{
+ position:absolute;left:50%;top:50%;width:110px;height:280px;transform:translate(-50%,-50%);
+ background:linear-gradient(90deg,#2a0e50,#bb6bff 45%,#4d12a2 78%,#18072d);
+ clip-path:polygon(32% 0,68% 0,100% 20%,100% 80%,68% 100%,32% 100%,0 80%,0 20%);
+ box-shadow:0 0 60px rgba(147,57,255,.42);animation:pulse 4s ease-in-out infinite
+}
+@keyframes pulse{50%{filter:brightness(1.15);transform:translate(-50%,-52%) rotateY(12deg)}}
+.node{position:absolute;width:12px;height:12px;border-radius:50%;background:#d796ff;box-shadow:0 0 18px #b95fff}
+.a{left:10%;top:22%}.b{right:12%;top:18%}.c{right:7%;bottom:24%}.d{left:16%;bottom:12%}.e{left:48%;top:5%}
+.node:after{content:"";position:absolute;width:120px;height:1px;background:linear-gradient(90deg,#a14cff,transparent);transform-origin:left center}
+.a:after{transform:rotate(30deg)}.b:after{transform:rotate(155deg)}.c:after{transform:rotate(205deg)}.d:after{transform:rotate(325deg)}.e:after{transform:rotate(92deg)}
+.section{margin-top:18px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(180deg,rgba(14,14,23,.87),rgba(7,7,12,.88));box-shadow:var(--shadow);overflow:hidden}
+.pad{padding:62px}
+.head{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:30px}
+h2{font-size:clamp(36px,5vw,68px);line-height:1;letter-spacing:-.04em;margin:8px 0}
+.story{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
+.storyCard{padding:38px;border:1px solid rgba(255,255,255,.07);border-radius:18px;background:rgba(255,255,255,.022);min-height:420px;position:relative;overflow:hidden}
+.storyCard:after{content:"";position:absolute;width:330px;height:330px;border-radius:50%;right:-150px;bottom:-160px;background:radial-gradient(circle,rgba(142,57,255,.17),transparent 68%)}
+.storyCard h3{font-size:36px;margin:8px 0 14px}.storyCard p{color:#a0a0af;line-height:1.8}
+.principles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.principle{padding:28px;border:1px solid rgba(255,255,255,.07);border-radius:18px;background:rgba(255,255,255,.02);position:relative;overflow:hidden;transition:.35s;min-height:245px}
+.principle:hover{transform:translateY(-7px);border-color:rgba(166,74,255,.34);box-shadow:0 24px 60px rgba(74,22,142,.18)}
+.pnum{font-size:11px;letter-spacing:.14em;color:#b967ff}.principle h3{font-size:20px}.principle p{color:#9898a9;line-height:1.68;font-size:14px}
+.standard{display:grid;grid-template-columns:.85fr 1.15fr;gap:14px}
+.standardNav,.standardPanel{padding:24px;border:1px solid rgba(255,255,255,.07);border-radius:18px;background:rgba(255,255,255,.02)}
+.standardItem{padding:15px;border-radius:13px;color:#a8a8b8;cursor:pointer;transition:.3s;display:flex;justify-content:space-between;align-items:center}.standardItem:hover,.standardItem.active{background:rgba(139,57,255,.10);color:#fff}.standardItem b{font-size:11px;color:#ba6cff;letter-spacing:.12em}
+.standardPanel{padding:36px;min-height:420px;position:relative;overflow:hidden}.standardPanel:after{content:"";position:absolute;width:340px;height:340px;right:-140px;bottom:-160px;border-radius:50%;background:radial-gradient(circle,rgba(143,54,255,.18),transparent 70%)}
+.standardPanel h3{font-size:34px;margin:8px 0 12px}.standardPanel p{color:#a0a0af;line-height:1.75;max-width:760px}
+.bullets{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:24px}.bullets div{padding:14px;border:1px solid rgba(255,255,255,.07);border-radius:12px;color:#c4c4cf;background:rgba(255,255,255,.018)}.bullets span{color:#b65fff;margin-right:9px}
+.expect{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.expectCard{padding:30px;border:1px solid rgba(255,255,255,.07);border-radius:18px;background:rgba(255,255,255,.02);min-height:260px}.expectCard h3{font-size:21px}.expectCard p{color:#9898a9;line-height:1.7}.expectCard .icon{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:rgba(132,45,255,.11);border:1px solid rgba(166,75,255,.25);box-shadow:0 0 26px rgba(137,55,255,.12);font-size:24px}
+.timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.step{padding:22px;position:relative}.num{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(169,77,255,.42);background:#0b0812;box-shadow:0 0 24px rgba(133,51,255,.15);transition:.3s}.step:hover .num{transform:translateY(-7px) rotate(8deg);box-shadow:0 0 34px rgba(145,59,255,.4)}.step p{color:#9999a9;font-size:13px;line-height:1.6}
+.final{min-height:410px;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;padding:58px;background:radial-gradient(circle at 75% 50%,rgba(140,48,255,.18),transparent 30%),linear-gradient(120deg,#0a0710,#08080e)}
+.finalVisual{height:300px;display:grid;place-items:center;position:relative}.orb{width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 38% 30%,#d9a2ff,#7e30ea 36%,#1a0d2d 72%);box-shadow:0 0 60px rgba(145,56,255,.45);animation:orb 4s ease-in-out infinite}.orb:before,.orb:after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;border:1px solid rgba(180,81,255,.22);top:40px;left:50%;transform:translateX(-50%) rotateX(67deg)}.orb:after{width:290px;height:290px;top:5px;animation:spin 10s linear infinite}
+@keyframes orb{50%{transform:translateY(-12px) scale(1.04);filter:brightness(1.12)}}
+footer{width:min(1440px,94vw);margin:18px auto 38px;padding:38px;border:1px solid var(--line);border-radius:20px;background:rgba(7,7,12,.75);display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:32px;position:relative;z-index:2}
+footer h4{margin:0 0 13px}footer a,footer p{display:block;color:#9393a4;text-decoration:none;margin:8px 0;font-size:14px}
+.reveal{opacity:0;transform:translateY(32px);filter:blur(5px);transition:.85s cubic-bezier(.2,.8,.2,1)}.reveal.on{opacity:1;transform:none;filter:blur(0)}
+@media(max-width:1050px){
+ .links{display:none}.hero{grid-template-columns:1fr}.heroCopy{padding:60px 30px}.heroVisual{min-height:500px}.story,.standard,.final{grid-template-columns:1fr}.principles{grid-template-columns:repeat(2,1fr)}.expect{grid-template-columns:1fr}.timeline{grid-template-columns:1fr 1fr}footer{grid-template-columns:1fr 1fr}
+}
+@media(max-width:620px){
+ h1{font-size:54px}.heroVisual{min-height:420px}.constellation{transform:scale(.73)}.pad{padding:32px 20px}.principles{grid-template-columns:1fr}.bullets{grid-template-columns:1fr}.timeline{grid-template-columns:1fr}.head{align-items:start;flex-direction:column}.final{padding:34px 22px}footer{grid-template-columns:1fr}
+}
+
+/* ===== NEXORA V9 GLOBAL EXPERIENCE LAYER ===== */
+.nx-page-loader{
+ position:fixed;inset:0;z-index:99999;background:#050507;display:grid;place-items:center;
+ transition:opacity .65s ease,visibility .65s ease
+}
+.nx-page-loader.hide{opacity:0;visibility:hidden}
+.nx-loader-inner{text-align:center}
+.nx-loader-logo{
+ width:86px;height:86px;margin:0 auto 22px;position:relative;filter:drop-shadow(0 0 28px rgba(162,68,255,.55));
+ animation:nxLoaderFloat 1.8s ease-in-out infinite
+}
+.nx-loader-logo:before{
+ content:"";position:absolute;inset:5px;background:linear-gradient(135deg,#d89cff,#8f3cff 46%,#4d13ba);
+ clip-path:polygon(0 0,30% 0,70% 58%,70% 0,100% 0,100% 100%,70% 100%,30% 42%,30% 100%,0 100%)
+}
+@keyframes nxLoaderFloat{50%{transform:translateY(-8px) rotateY(12deg)}}
+.nx-loader-bar{width:220px;height:2px;background:rgba(255,255,255,.07);overflow:hidden;border-radius:99px}
+.nx-loader-bar span{display:block;width:42%;height:100%;background:linear-gradient(90deg,transparent,#bb67ff,transparent);animation:nxSweep 1.05s linear infinite}
+@keyframes nxSweep{from{transform:translateX(-140%)}to{transform:translateX(360%)}}
+.nx-loader-text{margin-top:13px;font-size:10px;letter-spacing:.26em;color:#9385a3}
+
+.nx-transition{
+ position:fixed;inset:0;z-index:99998;pointer-events:none;display:grid;grid-template-columns:repeat(4,1fr)
+}
+.nx-transition span{background:#08080d;transform:translateY(100%);transition:transform .48s cubic-bezier(.7,0,.2,1)}
+.nx-transition.active span{transform:translateY(0)}
+.nx-transition span:nth-child(2){transition-delay:.04s}.nx-transition span:nth-child(3){transition-delay:.08s}.nx-transition span:nth-child(4){transition-delay:.12s}
+
+.nx-menu-btn{
+ display:none;width:44px;height:44px;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.03);
+ border-radius:12px;position:relative;cursor:pointer
+}
+.nx-menu-btn span{position:absolute;left:11px;right:11px;height:2px;background:#eee;border-radius:9px;transition:.3s}
+.nx-menu-btn span:nth-child(1){top:14px}.nx-menu-btn span:nth-child(2){top:21px}.nx-menu-btn span:nth-child(3){top:28px}
+.nx-menu-btn.open span:nth-child(1){top:21px;transform:rotate(45deg)}
+.nx-menu-btn.open span:nth-child(2){opacity:0}
+.nx-menu-btn.open span:nth-child(3){top:21px;transform:rotate(-45deg)}
+
+.nx-mobile-menu{
+ position:fixed;inset:0;z-index:9990;background:rgba(5,5,8,.94);backdrop-filter:blur(24px);
+ opacity:0;visibility:hidden;transition:.35s;display:grid;place-items:center;padding:90px 24px 34px
+}
+.nx-mobile-menu.open{opacity:1;visibility:visible}
+.nx-mobile-menu-inner{width:min(520px,100%);display:grid;gap:10px}
+.nx-mobile-menu a{
+ padding:17px 18px;border-radius:14px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.02);
+ color:white;text-decoration:none;font-size:21px;font-weight:800;letter-spacing:-.02em;transition:.3s
+}
+.nx-mobile-menu a:hover{background:rgba(139,57,255,.1);border-color:rgba(170,79,255,.3);transform:translateX(5px)}
+.nx-mobile-caption{color:#8f8f9f;font-size:12px;margin:12px 0 4px;letter-spacing:.12em}
+
+.nx-fade-up{opacity:0;transform:translateY(28px);filter:blur(5px);transition:.8s cubic-bezier(.2,.8,.2,1)}
+.nx-fade-up.nx-in{opacity:1;transform:none;filter:blur(0)}
+
+@media(max-width:1050px){
+ nav .links{display:none!important}
+ .nx-menu-btn{display:block}
+ nav>.btn,nav>.cta{display:none!important}
+}
+@media(max-width:700px){
+ body{background-attachment:scroll!important}
+ .hero,.section{border-radius:18px!important}
+ .heroCopy,.hero-copy{padding-left:22px!important;padding-right:22px!important}
+ .pad,.sectionPad{padding-left:18px!important;padding-right:18px!important}
+ .nx-transition{grid-template-columns:repeat(3,1fr)}
+ .nx-transition span:nth-child(4){display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto!important}
+ .nx-page-loader,.nx-transition{display:none!important}
+ *,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+
+
+/* ===== NEXORA REAL WEBGL / THREE.JS ===== */
+.hero-visual,.heroVisual{position:relative}
+.nx-webgl-shell{
+ position:absolute;inset:0;z-index:3;pointer-events:auto;overflow:hidden;
+ opacity:0;transform:scale(.985);transition:opacity .8s ease,transform .8s ease
+}
+.nx-three-ready .nx-webgl-shell{opacity:1;transform:none}
+.nx-webgl-canvas{display:block;width:100%;height:100%;outline:none}
+.nx-webgl-vignette{
+ position:absolute;inset:0;pointer-events:none;
+ background:
+ radial-gradient(circle at 50% 48%,transparent 0 34%,rgba(5,5,9,.10) 60%,rgba(5,5,9,.42) 100%),
+ linear-gradient(90deg,rgba(5,5,9,.12),transparent 28%,transparent 72%,rgba(5,5,9,.08));
+}
+.nx-three-fallback-hidden{
+ opacity:0!important;visibility:hidden!important;pointer-events:none!important;
+ transition:opacity .45s ease!important
+}
+@media(max-width:700px){
+ .nx-webgl-shell{inset:2% 0 0}
+}
+@media(prefers-reduced-motion:reduce){
+ .nx-webgl-shell{pointer-events:none}
+}
+
+
+/* ===== V12 FINAL PREMIUM DETAIL PASS ===== */
+:root{
+  --nx-focus:0 0 0 3px rgba(171,80,255,.18),0 0 0 1px rgba(190,110,255,.42);
+}
+body{
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+::selection{background:rgba(154,71,255,.35);color:white}
+a,button,input,textarea,select{outline:none}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{
+  box-shadow:var(--nx-focus)!important;
+}
+.btn,.cta,.ghost{
+  letter-spacing:-.01em;
+  transform:translateZ(0);
+}
+.btn strong,.cta strong{font-weight:800}
+a{transition:color .25s ease,opacity .25s ease,transform .25s ease}
+footer a:hover{color:#d6b3ff;transform:translateX(3px)}
+h1,h2,h3,h4{font-feature-settings:"kern","liga","clig","calt"}
+h1{max-width:16ch}
+.hero p,.sub{max-width:62ch}
+.section,.hero,.card,.project,.service,.storyCard,.principle,.expectCard,.quickCard{
+  box-shadow:0 22px 70px rgba(0,0,0,.24);
+}
+.section:has(.head),.hero{isolation:isolate}
+.nx-premium-divider{
+  height:1px;width:100%;background:linear-gradient(90deg,transparent,rgba(177,82,255,.22),transparent);margin:28px 0;
+}
+.nx-trust-strip{
+  display:flex;gap:18px;flex-wrap:wrap;align-items:center;
+  margin-top:24px;color:#8f8f9f;font-size:12px
+}
+.nx-trust-strip span{
+  display:inline-flex;align-items:center;gap:7px;padding:8px 10px;border:1px solid rgba(255,255,255,.06);
+  border-radius:999px;background:rgba(255,255,255,.018)
+}
+.nx-trust-strip i{
+  width:6px;height:6px;border-radius:50%;background:#a84fff;box-shadow:0 0 12px rgba(168,79,255,.7)
+}
+.nx-footer-legal{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+.nx-footer-legal a{font-size:12px}
+.nx-sr-only{
+ position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;
+ overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important
+}
+@media(max-width:700px){
+ h1{max-width:none}
+ .hero p,.sub{font-size:15px!important;line-height:1.65!important}
+ .nx-trust-strip{gap:8px}
+ .nx-trust-strip span{font-size:11px}
+}
+
+</style>
+
+<meta name="theme-color" content="#050507">
+<meta name="robots" content="index,follow">
+<link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+<link rel="canonical" href="{{ site_url }}{{ request.path }}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NEXORA">
+<meta property="og:title" content="About NEXORA — Strategy, Design & Engineering">
+<meta property="og:description" content="Learn how Nexora combines strategy, premium design, purposeful motion and engineering to build digital experiences.">
+<meta property="og:url" content="{{ site_url }}{{ request.path }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="About NEXORA — Strategy, Design & Engineering">
+<meta name="twitter:description" content="Learn how Nexora combines strategy, premium design, purposeful motion and engineering to build digital experiences.">
+
+
+<style>
+.n3d,.orbit,.ring,.portal,.portalCore,.constellation,.pillar,.stage,.panel3d,.holo,.core,.orb,.cube,.shard{
+ animation-play-state:var(--nx-paused,running)!important;
+}
+@media(max-width:700px){
+ #fx{opacity:.55}
+ .glow,.cursorGlow,.cursor{display:none!important}
+}
+</style>
+
+</head>
+<body data-nx-page="about">
+<a class="nx-skip nx-sr-only" href="#main-content">Skip to main content</a>
+<canvas id="fx"></canvas><div class="glow" id="glow"></div><div class="progress" id="progress"></div>
+
+<nav aria-label="Primary navigation">
+ <a class="brand" href="index.html"><div class="logo"></div>NEXORA</a>
+ <div class="links">
+  <a href="index.html">Home</a><a href="services.html">Services</a><a href="work.html">Work</a>
+  <a href="index.html#process">Process</a><a class="active" href="about.html">About</a><a href="contact.html">Contact</a>
+ </div>
+ <a class="btn magnetic" href="contact.html">Start a Project ↗</a>
+</nav>
+
+<main id="main-content" class="wrap">
+ <section class="hero">
+  <div class="heroCopy">
+   <div class="kicker"><i></i> WHY NEXORA EXISTS</div>
+   <h1>Built Around One Idea:<br><span class="grad">Digital Should Feel Exceptional.</span></h1>
+   <p>Nexora is being built as a digital studio for businesses that do not want their website or product to look ordinary. We combine strategy, premium design, interaction and engineering into one experience.</p>
+   <div class="actions"><a class="btn magnetic" href="#why">Why Nexora ↓</a><a class="btn ghost magnetic" href="work.html">See Our Work ↗</a></div>
+  </div>
+  <div class="heroVisual">
+    <div class="constellation" id="constellation">
+      <div class="pillar"></div>
+      <div class="node a"></div><div class="node b"></div><div class="node c"></div><div class="node d"></div><div class="node e"></div>
+    </div>
+  </div>
+ </section>
+
+ <section class="section reveal" id="why">
+  <div class="pad">
+   <div class="head"><div><div class="kicker"><i></i> OUR POINT OF VIEW</div><h2>A Website Should Be<br><span class="grad">More Than a Website.</span></h2></div><p class="sub">For many businesses, the website is the first serious impression a client gets. That impression should communicate quality before a salesperson ever speaks.</p></div>
+   <div class="story">
+    <div class="storyCard">
+      <div class="kicker"><i></i> THE PROBLEM</div><h3>Too Many Digital Products Feel Interchangeable.</h3>
+      <p>Templates, generic layouts and unnecessary effects can make completely different businesses look exactly the same. The result may technically work, but it does not create confidence, curiosity or memorability.</p>
+      <p>Nexora's approach is to understand what the business should feel like digitally, then build the visual language, interaction and technology around that.</p>
+    </div>
+    <div class="storyCard">
+      <div class="kicker"><i></i> THE GOAL</div><h3>Make the Experience Part of the Advantage.</h3>
+      <p>We want visitors to feel that the company behind the website operates at a higher standard. Motion should guide attention. Design should create trust. Technology should disappear into the experience.</p>
+      <p>The objective is not to add complexity. It is to make the final product feel deliberate.</p>
+    </div>
+   </div>
+  </div>
+ </section>
+
+ <section class="section reveal">
+  <div class="pad">
+   <div class="head"><div><div class="kicker"><i></i> NEXORA PRINCIPLES</div><h2>The Standards Behind<br><span class="grad">Every Build.</span></h2></div><p class="sub">These principles are designed to keep the work premium without turning it into visual noise.</p></div>
+   <div class="principles">
+    <div class="principle"><div class="pnum">01 / CLARITY</div><h3>Business Before Decoration</h3><p>Every page, interaction and feature should support a real business goal or user need.</p></div>
+    <div class="principle"><div class="pnum">02 / CRAFT</div><h3>Details Create Quality</h3><p>Spacing, typography, motion, loading states and responsive behavior all shape perceived quality.</p></div>
+    <div class="principle"><div class="pnum">03 / MOTION</div><h3>Animation With Purpose</h3><p>Motion should create hierarchy, feedback and memorability — not slow users down.</p></div>
+    <div class="principle"><div class="pnum">04 / ENGINEERING</div><h3>Beauty Must Perform</h3><p>A premium interface still needs strong performance, maintainable code and reliable systems.</p></div>
+   </div>
+  </div>
+ </section>
+
+ <section class="section reveal">
+  <div class="pad">
+   <div class="head"><div><div class="kicker"><i></i> THE NEXORA STANDARD</div><h2>What “Premium” Means<br><span class="grad">In Practice.</span></h2></div><p class="sub">Not just a dark theme and glowing buttons. Premium is the combination of thinking, craft and execution across the whole experience.</p></div>
+   <div class="standard">
+    <div class="standardNav" id="standardNav"></div>
+    <div class="standardPanel" id="standardPanel"></div>
+   </div>
+  </div>
+ </section>
+
+ <section class="section reveal">
+  <div class="pad">
+   <div class="head"><div><div class="kicker"><i></i> WHAT CLIENTS CAN EXPECT</div><h2>A Better Working<br><span class="grad">Experience Too.</span></h2></div><p class="sub">The product should feel professional, and so should the process of building it.</p></div>
+   <div class="expect">
+    <div class="expectCard"><div class="icon">◎</div><h3>Clear Direction</h3><p>We define what is being built, why it matters and what the priority is before development becomes chaotic.</p></div>
+    <div class="expectCard"><div class="icon">◇</div><h3>Visible Progress</h3><p>Design and implementation are reviewed in clear stages so the client is never guessing where the project stands.</p></div>
+    <div class="expectCard"><div class="icon">↗</div><h3>Built to Grow</h3><p>Where appropriate, structure and technology are chosen with future pages, features and business expansion in mind.</p></div>
+   </div>
+  </div>
+ </section>
+
+ <section class="section reveal">
+  <div class="pad">
+   <div class="kicker"><i></i> FROM FIRST CONVERSATION TO LAUNCH</div><h2 style="font-size:50px">A Process Designed<br><span class="grad">to Reduce Guesswork.</span></h2>
+   <div class="timeline">
+    <div class="step"><div class="num">01</div><h4>Understand</h4><p>Business, audience, problem and ambition.</p></div>
+    <div class="step"><div class="num">02</div><h4>Define</h4><p>Scope, user journey, pages, features and technical needs.</p></div>
+    <div class="step"><div class="num">03</div><h4>Design</h4><p>Visual language, responsive UI and motion system.</p></div>
+    <div class="step"><div class="num">04</div><h4>Engineer</h4><p>Frontend, backend, integrations and testing.</p></div>
+    <div class="step"><div class="num">05</div><h4>Launch & Improve</h4><p>Deployment, optimization and ongoing growth.</p></div>
+   </div>
+  </div>
+ </section>
+
+ <section class="section final reveal">
+  <div>
+    <div class="kicker"><i></i> THE NEXT STEP</div>
+    <h2>Bring the Ambition.<br><span class="grad">We'll Shape the Experience.</span></h2>
+    <p class="sub">Whether you're starting with a landing page or building a full digital product, Nexora can help turn the idea into something clients remember.</p>
+    <div class="actions"><a class="btn magnetic" href="contact.html">Start Your Project →</a><a class="btn ghost magnetic" href="services.html">Explore Services ↗</a></div>
+  </div>
+  <div class="finalVisual"><div class="orb"></div></div>
+ </section>
+</main>
+
+<footer>
+ <div><div class="brand"><div class="logo"></div>NEXORA</div><p style="max-width:320px">Premium websites, apps, 3D experiences and custom software built to make businesses stand out.</p></div>
+ <div><h4>Services</h4><a href="services.html">Websites</a><a href="services.html">Mobile Apps</a><a href="services.html">3D Experiences</a><a href="services.html">Custom Software</a></div>
+ <div><h4>Company</h4><a href="about.html">About</a><a href="work.html">Work</a><a href="index.html#process">Process</a><a href="contact.html">Contact</a></div>
+ <div><h4>Explore</h4><a href="work.html">Concept Work</a><a href="services.html">Capabilities</a><p>© 2026 Nexora</p></div>
+</footer>
+
+<script>
+const standards={
+ strategy:{title:"Strategy Before Screens",lead:"Start with the business problem, not with a visual effect.",desc:"We define the audience, desired action, content hierarchy and core user journey before styling the experience.",bullets:["Clear project goals","User journey mapping","Feature prioritization","Content architecture"]},
+ design:{title:"Design With a Point of View",lead:"Premium should feel distinctive, not copied.",desc:"Typography, spacing, layout, contrast and interaction are shaped into a visual system that belongs to the business.",bullets:["Custom visual direction","Responsive UI system","Interaction hierarchy","Consistent component language"]},
+ motion:{title:"Motion That Adds Meaning",lead:"Animation should guide attention and make interaction feel natural.",desc:"We use motion selectively for transitions, feedback, storytelling and spatial depth without turning the product into a demo reel.",bullets:["Scroll choreography","Micro-interactions","3D where justified","Reduced-motion fallbacks"]},
+ engineering:{title:"Engineering That Holds Up",lead:"The design is only as strong as the product underneath it.",desc:"Performance, responsiveness, structure and maintainability are considered alongside the visual experience.",bullets:["Performance focus","Responsive behavior","Scalable structure","Testing & deployment"]}
+};
+const order=["strategy","design","motion","engineering"];
+const nav=document.getElementById("standardNav"),panel=document.getElementById("standardPanel");
+function render(){
+ nav.innerHTML='<div class="kicker" style="margin:4px 0 12px"><i></i> EXPLORE THE STANDARD</div>'+order.map((k,i)=>`<div class="standardItem ${i===0?'active':''}" data-k="${k}"><span>${standards[k].title}</span><b>${String(i+1).padStart(2,'0')}</b></div>`).join("");
+ nav.querySelectorAll(".standardItem").forEach(el=>el.onclick=()=>show(el.dataset.k));
+}
+function show(k){
+ const d=standards[k];
+ nav.querySelectorAll(".standardItem").forEach(el=>el.classList.toggle("active",el.dataset.k===k));
+ panel.animate([{opacity:.15,transform:"translateY(10px)"},{opacity:1,transform:"none"}],{duration:340,easing:"ease-out"});
+ panel.innerHTML=`<div class="kicker"><i></i> ${d.lead}</div><h3>${d.title}</h3><p>${d.desc}</p><div class="bullets">${d.bullets.map(x=>`<div><span>✦</span>${x}</div>`).join("")}</div><div class="actions"><a class="btn" href="contact.html">Build With This Standard →</a></div>`;
+}
+render();show("strategy");
+
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("on");io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(x=>io.observe(x));
+
+const glow=document.getElementById("glow");
+addEventListener("pointermove",e=>{glow.style.left=e.clientX+"px";glow.style.top=e.clientY+"px"});
+document.querySelectorAll(".magnetic").forEach(el=>{
+ el.addEventListener("pointermove",e=>{const r=el.getBoundingClientRect(),x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-r.height/2;el.style.transform=`translate(${x*.10}px,${y*.10}px)`});
+ el.addEventListener("pointerleave",()=>el.style.transform="");
+});
+
+const constellation=document.getElementById("constellation"),heroV=document.querySelector(".heroVisual");
+heroV.addEventListener("pointermove",e=>{const r=heroV.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;constellation.style.transform=`rotateY(${x*11}deg) rotateX(${-y*8}deg)`});
+heroV.addEventListener("pointerleave",()=>constellation.style.transform="");
+
+const progress=document.getElementById("progress");
+addEventListener("scroll",()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=(scrollY/max*100)+"%"},{passive:true});
+
+document.querySelectorAll(".principle,.expectCard,.storyCard").forEach(card=>{
+ card.addEventListener("pointermove",e=>{const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;card.style.transform=`perspective(900px) rotateX(${-y*3.5}deg) rotateY(${x*4}deg) translateY(-4px)`});
+ card.addEventListener("pointerleave",()=>card.style.transform="");
+});
+
+const c=document.getElementById("fx"),ctx=c.getContext("2d");let W,H,dpr=Math.min(devicePixelRatio||1,2),pts=[];
+function size(){W=c.width=innerWidth*dpr;H=c.height=innerHeight*dpr;pts=Array.from({length:90},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.15*dpr,vy:(Math.random()-.5)*.15*dpr,r:(Math.random()*1.2+.35)*dpr,a:Math.random()*.45+.12}))}
+function loop(){ctx.clearRect(0,0,W,H);for(let i=0;i<pts.length;i++){const p=pts[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(173,81,255,${p.a})`;ctx.shadowBlur=10*dpr;ctx.shadowColor="rgba(137,55,255,.5)";ctx.fill();ctx.shadowBlur=0;if(i<32)for(let j=i+1;j<32;j++){const q=pts[j],d=Math.hypot(p.x-q.x,p.y-q.y);if(d<100*dpr){ctx.strokeStyle=`rgba(139,57,255,${(1-d/(100*dpr))*.05})`;ctx.lineWidth=.5*dpr;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke()}}}requestAnimationFrame(loop)}
+size();loop();addEventListener("resize",size);
+</script>
+
+<script>
+(function(){
+  // Loader
+  const loader=document.createElement("div");
+  loader.className="nx-page-loader";
+  loader.innerHTML='<div class="nx-loader-inner"><div class="nx-loader-logo"></div><div class="nx-loader-bar"><span></span></div><div class="nx-loader-text">NEXORA EXPERIENCE</div></div>';
+  document.body.prepend(loader);
+
+  const transition=document.createElement("div");
+  transition.className="nx-transition";
+  transition.innerHTML="<span></span><span></span><span></span><span></span>";
+  document.body.appendChild(transition);
+
+  window.addEventListener("load",()=>setTimeout(()=>loader.classList.add("hide"),450));
+
+  // Mobile menu
+  const nav=document.querySelector("nav");
+  if(nav){
+    const btn=document.createElement("button");
+    btn.className="nx-menu-btn";
+    btn.setAttribute("aria-label","Open navigation");
+    btn.innerHTML="<span></span><span></span><span></span>";
+    nav.appendChild(btn);
+
+    const menu=document.createElement("div");
+    menu.className="nx-mobile-menu";
+    const links=[
+      ["Home","/"],
+      ["Services","/services"],
+      ["Work","/work"],
+      ["About","/about"],
+      ["Start a Project","/contact"]
+    ];
+    menu.innerHTML='<div class="nx-mobile-menu-inner"><div class="nx-mobile-caption">NEXORA / NAVIGATION</div>'+
+      links.map(([n,h])=>`<a href="${h}">${n}<span style="float:right;color:#b86cff">↗</span></a>`).join("")+
+      '</div>';
+    document.body.appendChild(menu);
+
+    const toggle=()=>{btn.classList.toggle("open");menu.classList.toggle("open");document.body.style.overflow=menu.classList.contains("open")?"hidden":""};
+    btn.addEventListener("click",toggle);
+    menu.addEventListener("click",e=>{if(e.target===menu)toggle()});
+  }
+
+  // Cinematic internal navigation
+  document.addEventListener("click",e=>{
+    const a=e.target.closest("a");
+    if(!a)return;
+    const href=a.getAttribute("href");
+    if(!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:") ||
+       href.startsWith("https://wa.me") || a.target==="_blank") return;
+    const url=new URL(a.href,location.href);
+    if(url.origin!==location.origin)return;
+    e.preventDefault();
+    transition.classList.add("active");
+    setTimeout(()=>location.href=url.href,560);
+  });
+
+  // Generic reveal for key page blocks
+  const blocks=document.querySelectorAll(".section,.project,.card,.principle,.expectCard,.quickCard,.storyCard");
+  blocks.forEach(x=>x.classList.add("nx-fade-up"));
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add("nx-in");io.unobserve(e.target)}
+  }),{threshold:.08});
+  blocks.forEach(x=>io.observe(x));
+
+  // Better touch: disable aggressive tilt on coarse pointers
+  if(matchMedia("(pointer: coarse)").matches){
+    document.querySelectorAll(".card,.project,.service,.principle,.expectCard,.storyCard").forEach(el=>{
+      el.style.transform="";
+      el.onpointermove=null;
+    });
+  }
+
+  // Global visibility pause hint for animation-heavy pages
+  document.addEventListener("visibilitychange",()=>{
+    document.documentElement.style.setProperty("--nx-paused",document.hidden?"paused":"running");
+  });
+})();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='nexora-three.js') }}"></script>
+
+</body>
+</html>

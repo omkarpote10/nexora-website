@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nexora Admin Login</title>
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:radial-gradient(circle at 70% 20%,#1b0836,transparent 30%),#050507;color:white;font-family:Inter,system-ui,sans-serif}
+.card{width:min(420px,90vw);padding:34px;border:1px solid rgba(255,255,255,.08);border-radius:22px;background:rgba(12,12,20,.9);box-shadow:0 30px 90px rgba(0,0,0,.45)}
+.brand{font-weight:900;letter-spacing:.14em;margin-bottom:28px}.brand span{color:#b15cff}
+h1{margin:0 0 8px;font-size:34px}.muted{color:#9999aa;margin-bottom:24px}
+label{display:block;margin:14px 0 7px;color:#c9c9d3;font-size:13px}
+input{width:100%;box-sizing:border-box;padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,.09);background:#0b0b12;color:white;outline:none}
+button{width:100%;margin-top:20px;padding:14px;border:0;border-radius:12px;color:white;font-weight:800;background:linear-gradient(135deg,#9b43ff,#5b1fdf);cursor:pointer}
+.error{margin-top:14px;color:#ff7893;font-size:13px}
+.note{margin-top:18px;color:#777789;font-size:12px;line-height:1.6}
+</style></head><body>
+<div class="card">
+ <div class="brand">NEX<span>ORA</span> / ADMIN</div>
+ <h1>Lead Dashboard</h1>
+ <div class="muted">Sign in to review project enquiries.</div>
+ <form method="post">
+  <label>Username</label><input name="username" autocomplete="username">
+  <label>Password</label><input type="password" name="password" autocomplete="current-password">
+  <button>Enter Dashboard →</button>
+ </form>
+ {% if error %}<div class="error">{{ error }}</div>{% endif %}
+ <div class="note">Change the default admin credentials using environment variables before production deployment.</div>
+</div>
+</body></html>

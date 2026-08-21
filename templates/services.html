@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>NEXORA Services — Web, Apps, 3D, Commerce & Software</title>
+<meta name="description" content="Explore Nexora services across premium websites, mobile apps, 3D experiences, e-commerce, AI integrations and custom software.">
+<style>
+:root{
+ --bg:#050507;--panel:#0b0b12;--panel2:#11111a;--text:#f8f8fb;--muted:#9d9dae;
+ --line:rgba(255,255,255,.08);--p:#8e3dff;--p2:#c169ff;--p3:#5a1ad8;
+ --radius:22px;--shadow:0 28px 80px rgba(0,0,0,.35)
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{
+ margin:0;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ background:
+ radial-gradient(circle at 80% 5%,rgba(137,52,255,.16),transparent 28%),
+ radial-gradient(circle at 8% 28%,rgba(96,33,205,.11),transparent 24%),var(--bg);
+ overflow-x:hidden
+}
+body:before{
+ content:"";position:fixed;inset:0;pointer-events:none;z-index:100;
+ background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+ background-size:42px 42px;mask-image:linear-gradient(to bottom,black,transparent 90%)
+}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.cursorGlow{position:fixed;width:420px;height:420px;border-radius:50%;pointer-events:none;z-index:0;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(141,61,255,.10),transparent 68%);filter:blur(8px)}
+.progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:999;background:linear-gradient(90deg,var(--p),var(--p2));box-shadow:0 0 18px var(--p)}
+.wrap{width:min(1440px,94vw);margin:auto;position:relative;z-index:2}
+nav{
+ position:sticky;top:12px;z-index:80;width:min(1440px,94vw);margin:14px auto 0;
+ padding:14px 16px 14px 20px;display:flex;align-items:center;justify-content:space-between;
+ border:1px solid var(--line);border-radius:17px;background:rgba(5,5,9,.58);backdrop-filter:blur(18px) saturate(145%);
+ box-shadow:0 18px 60px rgba(0,0,0,.25)
+}
+.brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:.12em}
+.logo{width:34px;height:34px;position:relative;filter:drop-shadow(0 0 16px rgba(150,56,255,.65))}
+.logo:before{content:"";position:absolute;inset:3px;background:linear-gradient(135deg,#d18bff,#8b38ff 45%,#5517ce);
+ clip-path:polygon(0 0,30% 0,70% 58%,70% 0,100% 0,100% 100%,70% 100%,30% 42%,30% 100%,0 100%)}
+.links{display:flex;gap:26px;align-items:center}.links a{color:#d5d5df;text-decoration:none;font-size:14px;position:relative}
+.links a:after{content:"";position:absolute;height:2px;left:0;right:100%;bottom:-7px;background:linear-gradient(90deg,var(--p),var(--p2));transition:.3s}.links a:hover:after,.links a.active:after{right:0}
+.btn{
+ border:none;cursor:pointer;border-radius:12px;padding:13px 19px;font-weight:800;color:white;transition:.28s;
+ background:linear-gradient(135deg,#9b43ff,#5b1fdf);box-shadow:0 10px 30px rgba(118,46,255,.28);position:relative;overflow:hidden
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 15px 44px rgba(131,54,255,.45)}
+.btn.ghost{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.12);box-shadow:none}
+.btn:after{content:"";position:absolute;inset:-3px;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.28),transparent 55%);transform:translateX(-140%);transition:.65s}.btn:hover:after{transform:translateX(140%)}
+.hero{
+ min-height:650px;margin-top:18px;border:1px solid var(--line);border-radius:28px;overflow:hidden;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;
+ background:linear-gradient(90deg,rgba(6,6,11,.96),rgba(6,6,11,.70)),radial-gradient(circle at 78% 45%,rgba(141,61,255,.23),transparent 36%)
+}
+.heroCopy{padding:78px 0 78px 70px;position:relative;z-index:5}
+.kicker{display:inline-flex;align-items:center;gap:9px;font-size:11px;letter-spacing:.15em;color:#c98cff;text-transform:uppercase}
+.kicker i{width:7px;height:7px;border-radius:50%;background:#ae55ff;box-shadow:0 0 14px #ae55ff}
+h1{font-size:clamp(54px,6.8vw,102px);line-height:.93;letter-spacing:-.055em;margin:20px 0 24px;max-width:790px}
+.grad{background:linear-gradient(90deg,#fff,#c57dff 45%,#7c32ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p,.sub{color:var(--muted);font-size:17px;line-height:1.75;max-width:650px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.heroVisual{position:relative;height:100%;min-height:600px;display:grid;place-items:center;perspective:1200px}
+.holo{
+ width:430px;height:430px;position:relative;transform-style:preserve-3d;animation:float 5s ease-in-out infinite
+}
+@keyframes float{50%{transform:translateY(-15px) rotateY(6deg) rotateX(-3deg)}}
+.ring{position:absolute;inset:12%;border-radius:50%;border:1px solid rgba(177,79,255,.42);box-shadow:0 0 32px rgba(139,54,255,.18);animation:spin 11s linear infinite}
+.ring.r2{inset:25%;transform:rotateX(67deg);animation-duration:7s;animation-direction:reverse}.ring.r3{inset:2% 18%;transform:rotateY(68deg);animation-duration:14s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.core{
+ position:absolute;inset:30%;display:grid;place-items:center;border-radius:28px;transform:rotate(45deg);
+ background:linear-gradient(145deg,#d9a3ff,#8f3dff 45%,#4510a8);box-shadow:0 0 70px rgba(137,50,255,.55),inset 0 0 25px rgba(255,255,255,.18)
+}
+.core span{transform:rotate(-45deg);font-size:76px;font-weight:1000}
+.node{position:absolute;width:10px;height:10px;border-radius:50%;background:#dd9eff;box-shadow:0 0 18px #b65cff}
+.n1{left:8%;top:30%;animation:node 3s ease-in-out infinite}.n2{right:9%;top:18%;animation:node 2.4s ease-in-out infinite -.8s}.n3{right:12%;bottom:22%;animation:node 2.9s ease-in-out infinite -1.2s}.n4{left:15%;bottom:10%;animation:node 3.4s ease-in-out infinite -.3s}
+@keyframes node{50%{transform:scale(1.8);opacity:.35}}
+.section{margin-top:18px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg,rgba(14,14,23,.86),rgba(7,7,12,.86));box-shadow:var(--shadow);overflow:hidden}
+.sectionPad{padding:62px}
+.head{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:30px}
+h2{font-size:clamp(36px,5vw,68px);line-height:1;letter-spacing:-.04em;margin:8px 0}
+.filterBar{display:flex;flex-wrap:wrap;gap:9px;margin:28px 0 30px}
+.filter{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.025);color:#bcbccc;border-radius:999px;padding:10px 15px;cursor:pointer;transition:.3s}
+.filter.active,.filter:hover{color:#fff;border-color:rgba(166,74,255,.42);background:rgba(137,54,255,.12);box-shadow:0 0 24px rgba(129,49,255,.12)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.service{
+ min-height:285px;padding:26px;border:1px solid rgba(255,255,255,.07);border-radius:18px;background:rgba(255,255,255,.022);
+ position:relative;overflow:hidden;cursor:pointer;transition:.4s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d
+}
+.service:hover{border-color:rgba(169,79,255,.36);box-shadow:0 28px 60px rgba(69,20,132,.22)}
+.service:before{content:"";position:absolute;width:160px;height:160px;border-radius:50%;right:-70px;top:-70px;background:radial-gradient(circle,rgba(155,67,255,.18),transparent 65%);transition:.4s}
+.service:hover:before{transform:scale(1.7)}
+.icon{width:56px;height:56px;border-radius:15px;display:grid;place-items:center;font-size:24px;border:1px solid rgba(165,76,255,.28);background:linear-gradient(145deg,rgba(131,48,255,.14),rgba(255,255,255,.02));box-shadow:0 0 26px rgba(140,54,255,.12)}
+.service h3{font-size:19px;margin:22px 0 10px}.service p{color:#9b9bab;line-height:1.65;font-size:14px}.service .more{position:absolute;bottom:22px;left:26px;color:#c784ff;font-size:13px;font-weight:700}
+.service.hidden{display:none}
+.detail{
+ margin-top:16px;display:grid;grid-template-columns:.8fr 1.2fr;gap:14px
+}
+.detailNav,.detailPanel{border:1px solid rgba(255,255,255,.07);border-radius:18px;background:rgba(255,255,255,.02);padding:24px}
+.detailTab{display:flex;align-items:center;gap:12px;padding:15px;border-radius:13px;color:#a8a8b8;cursor:pointer;transition:.3s}
+.detailTab:hover,.detailTab.active{background:rgba(139,57,255,.10);color:white}
+.detailTab b{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:#12121c;border:1px solid rgba(255,255,255,.08)}
+.detailPanel{min-height:430px;padding:36px;position:relative;overflow:hidden}
+.detailPanel:after{content:"";position:absolute;width:330px;height:330px;right:-130px;bottom:-140px;border-radius:50%;background:radial-gradient(circle,rgba(143,54,255,.18),transparent 70%)}
+.detailPanel h3{font-size:34px;margin:7px 0 12px}.detailPanel p{color:#a2a2b1;line-height:1.7;max-width:740px}
+.deliver{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:24px}
+.deliver div{padding:14px;border:1px solid rgba(255,255,255,.07);border-radius:12px;color:#c8c8d2;background:rgba(255,255,255,.018)}
+.deliver span{color:#b862ff;margin-right:9px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}.tag{padding:8px 11px;border-radius:999px;font-size:12px;color:#c2b1d5;background:rgba(137,55,255,.08);border:1px solid rgba(159,68,255,.19)}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.tier{padding:30px;border:1px solid rgba(255,255,255,.07);border-radius:18px;background:rgba(255,255,255,.02);position:relative;transition:.35s}
+.tier.featured{border-color:rgba(166,76,255,.38);background:linear-gradient(180deg,rgba(128,44,255,.11),rgba(255,255,255,.02));transform:translateY(-8px);box-shadow:0 22px 50px rgba(80,24,148,.17)}
+.tier h3{font-size:22px}.tier .type{color:#c17dff;font-size:12px;letter-spacing:.12em}.tier ul{padding:0;list-style:none}.tier li{color:#aaaabb;margin:12px 0;font-size:14px}.tier li:before{content:"✦";color:#ae55ff;margin-right:9px}
+.process{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.step{padding:22px;position:relative}
+.num{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(169,77,255,.42);background:#0b0812;box-shadow:0 0 24px rgba(133,51,255,.15);transition:.3s}
+.step:hover .num{transform:translateY(-7px) rotate(8deg);box-shadow:0 0 34px rgba(145,59,255,.4)}
+.step h4{margin-bottom:7px}.step p{color:#9999a9;font-size:13px;line-height:1.6}
+.tech{display:grid;grid-template-columns:repeat(8,1fr);gap:10px}.pill{padding:18px 8px;text-align:center;border:1px solid rgba(255,255,255,.07);border-radius:13px;background:rgba(255,255,255,.018);color:#c0c0cd;transition:.3s}.pill:hover{transform:translateY(-5px);border-color:rgba(162,72,255,.3);color:white}
+.faqItem{border-top:1px solid rgba(255,255,255,.07)}.faqQ{display:flex;align-items:center;justify-content:space-between;padding:22px 0;cursor:pointer;font-weight:700}.faqQ span{color:#bd69ff;font-size:22px}.faqA{max-height:0;overflow:hidden;color:#9999a9;line-height:1.7;transition:max-height .4s ease,padding .4s}.faqItem.open .faqA{max-height:180px;padding-bottom:22px}
+.final{min-height:390px;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;padding:58px;background:radial-gradient(circle at 75% 50%,rgba(140,48,255,.18),transparent 30%),linear-gradient(120deg,#0a0710,#08080e)}
+.finalOrb{height:300px;position:relative;display:grid;place-items:center}.finalOrb:before,.finalOrb:after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(176,80,255,.25);animation:orb 9s linear infinite}.finalOrb:before{width:250px;height:250px}.finalOrb:after{width:170px;height:170px;animation-direction:reverse;animation-duration:6s}
+.finalCore{width:100px;height:100px;border-radius:30px;transform:rotate(45deg);background:linear-gradient(145deg,#ca83ff,#8838ff,#4912ad);box-shadow:0 0 55px rgba(143,55,255,.48)}
+@keyframes orb{to{transform:rotate(360deg)}}
+footer{width:min(1440px,94vw);margin:18px auto 38px;padding:38px;border:1px solid var(--line);border-radius:20px;background:rgba(7,7,12,.75);display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:32px;position:relative;z-index:2}
+footer h4{margin:0 0 13px}footer a,footer p{display:block;color:#9393a4;text-decoration:none;margin:8px 0;font-size:14px}
+.reveal{opacity:0;transform:translateY(32px);filter:blur(5px);transition:.85s cubic-bezier(.2,.8,.2,1)}.reveal.on{opacity:1;transform:none;filter:blur(0)}
+@media(max-width:1050px){.links{display:none}.hero{grid-template-columns:1fr}.heroCopy{padding:60px 30px}.heroVisual{min-height:500px}.grid{grid-template-columns:repeat(2,1fr)}.detail{grid-template-columns:1fr}.tiers{grid-template-columns:1fr}.tier.featured{transform:none}.process{grid-template-columns:1fr 1fr}.tech{grid-template-columns:repeat(4,1fr)}.final{grid-template-columns:1fr}footer{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){h1{font-size:54px}.heroVisual{min-height:420px}.holo{transform:scale(.75)}.sectionPad{padding:32px 20px}.grid{grid-template-columns:1fr}.deliver{grid-template-columns:1fr}.process{grid-template-columns:1fr}.tech{grid-template-columns:repeat(2,1fr)}footer{grid-template-columns:1fr}.final{padding:34px 22px}.head{align-items:start;flex-direction:column}}
+
+/* ===== NEXORA V9 GLOBAL EXPERIENCE LAYER ===== */
+.nx-page-loader{
+ position:fixed;inset:0;z-index:99999;background:#050507;display:grid;place-items:center;
+ transition:opacity .65s ease,visibility .65s ease
+}
+.nx-page-loader.hide{opacity:0;visibility:hidden}
+.nx-loader-inner{text-align:center}
+.nx-loader-logo{
+ width:86px;height:86px;margin:0 auto 22px;position:relative;filter:drop-shadow(0 0 28px rgba(162,68,255,.55));
+ animation:nxLoaderFloat 1.8s ease-in-out infinite
+}
+.nx-loader-logo:before{
+ content:"";position:absolute;inset:5px;background:linear-gradient(135deg,#d89cff,#8f3cff 46%,#4d13ba);
+ clip-path:polygon(0 0,30% 0,70% 58%,70% 0,100% 0,100% 100%,70% 100%,30% 42%,30% 100%,0 100%)
+}
+@keyframes nxLoaderFloat{50%{transform:translateY(-8px) rotateY(12deg)}}
+.nx-loader-bar{width:220px;height:2px;background:rgba(255,255,255,.07);overflow:hidden;border-radius:99px}
+.nx-loader-bar span{display:block;width:42%;height:100%;background:linear-gradient(90deg,transparent,#bb67ff,transparent);animation:nxSweep 1.05s linear infinite}
+@keyframes nxSweep{from{transform:translateX(-140%)}to{transform:translateX(360%)}}
+.nx-loader-text{margin-top:13px;font-size:10px;letter-spacing:.26em;color:#9385a3}
+
+.nx-transition{
+ position:fixed;inset:0;z-index:99998;pointer-events:none;display:grid;grid-template-columns:repeat(4,1fr)
+}
+.nx-transition span{background:#08080d;transform:translateY(100%);transition:transform .48s cubic-bezier(.7,0,.2,1)}
+.nx-transition.active span{transform:translateY(0)}
+.nx-transition span:nth-child(2){transition-delay:.04s}.nx-transition span:nth-child(3){transition-delay:.08s}.nx-transition span:nth-child(4){transition-delay:.12s}
+
+.nx-menu-btn{
+ display:none;width:44px;height:44px;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.03);
+ border-radius:12px;position:relative;cursor:pointer
+}
+.nx-menu-btn span{position:absolute;left:11px;right:11px;height:2px;background:#eee;border-radius:9px;transition:.3s}
+.nx-menu-btn span:nth-child(1){top:14px}.nx-menu-btn span:nth-child(2){top:21px}.nx-menu-btn span:nth-child(3){top:28px}
+.nx-menu-btn.open span:nth-child(1){top:21px;transform:rotate(45deg)}
+.nx-menu-btn.open span:nth-child(2){opacity:0}
+.nx-menu-btn.open span:nth-child(3){top:21px;transform:rotate(-45deg)}
+
+.nx-mobile-menu{
+ position:fixed;inset:0;z-index:9990;background:rgba(5,5,8,.94);backdrop-filter:blur(24px);
+ opacity:0;visibility:hidden;transition:.35s;display:grid;place-items:center;padding:90px 24px 34px
+}
+.nx-mobile-menu.open{opacity:1;visibility:visible}
+.nx-mobile-menu-inner{width:min(520px,100%);display:grid;gap:10px}
+.nx-mobile-menu a{
+ padding:17px 18px;border-radius:14px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.02);
+ color:white;text-decoration:none;font-size:21px;font-weight:800;letter-spacing:-.02em;transition:.3s
+}
+.nx-mobile-menu a:hover{background:rgba(139,57,255,.1);border-color:rgba(170,79,255,.3);transform:translateX(5px)}
+.nx-mobile-caption{color:#8f8f9f;font-size:12px;margin:12px 0 4px;letter-spacing:.12em}
+
+.nx-fade-up{opacity:0;transform:translateY(28px);filter:blur(5px);transition:.8s cubic-bezier(.2,.8,.2,1)}
+.nx-fade-up.nx-in{opacity:1;transform:none;filter:blur(0)}
+
+@media(max-width:1050px){
+ nav .links{display:none!important}
+ .nx-menu-btn{display:block}
+ nav>.btn,nav>.cta{display:none!important}
+}
+@media(max-width:700px){
+ body{background-attachment:scroll!important}
+ .hero,.section{border-radius:18px!important}
+ .heroCopy,.hero-copy{padding-left:22px!important;padding-right:22px!important}
+ .pad,.sectionPad{padding-left:18px!important;padding-right:18px!important}
+ .nx-transition{grid-template-columns:repeat(3,1fr)}
+ .nx-transition span:nth-child(4){display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto!important}
+ .nx-page-loader,.nx-transition{display:none!important}
+ *,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+
+
+/* ===== NEXORA REAL WEBGL / THREE.JS ===== */
+.hero-visual,.heroVisual{position:relative}
+.nx-webgl-shell{
+ position:absolute;inset:0;z-index:3;pointer-events:auto;overflow:hidden;
+ opacity:0;transform:scale(.985);transition:opacity .8s ease,transform .8s ease
+}
+.nx-three-ready .nx-webgl-shell{opacity:1;transform:none}
+.nx-webgl-canvas{display:block;width:100%;height:100%;outline:none}
+.nx-webgl-vignette{
+ position:absolute;inset:0;pointer-events:none;
+ background:
+ radial-gradient(circle at 50% 48%,transparent 0 34%,rgba(5,5,9,.10) 60%,rgba(5,5,9,.42) 100%),
+ linear-gradient(90deg,rgba(5,5,9,.12),transparent 28%,transparent 72%,rgba(5,5,9,.08));
+}
+.nx-three-fallback-hidden{
+ opacity:0!important;visibility:hidden!important;pointer-events:none!important;
+ transition:opacity .45s ease!important
+}
+@media(max-width:700px){
+ .nx-webgl-shell{inset:2% 0 0}
+}
+@media(prefers-reduced-motion:reduce){
+ .nx-webgl-shell{pointer-events:none}
+}
+
+
+/* ===== V12 FINAL PREMIUM DETAIL PASS ===== */
+:root{
+  --nx-focus:0 0 0 3px rgba(171,80,255,.18),0 0 0 1px rgba(190,110,255,.42);
+}
+body{
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+::selection{background:rgba(154,71,255,.35);color:white}
+a,button,input,textarea,select{outline:none}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{
+  box-shadow:var(--nx-focus)!important;
+}
+.btn,.cta,.ghost{
+  letter-spacing:-.01em;
+  transform:translateZ(0);
+}
+.btn strong,.cta strong{font-weight:800}
+a{transition:color .25s ease,opacity .25s ease,transform .25s ease}
+footer a:hover{color:#d6b3ff;transform:translateX(3px)}
+h1,h2,h3,h4{font-feature-settings:"kern","liga","clig","calt"}
+h1{max-width:16ch}
+.hero p,.sub{max-width:62ch}
+.section,.hero,.card,.project,.service,.storyCard,.principle,.expectCard,.quickCard{
+  box-shadow:0 22px 70px rgba(0,0,0,.24);
+}
+.section:has(.head),.hero{isolation:isolate}
+.nx-premium-divider{
+  height:1px;width:100%;background:linear-gradient(90deg,transparent,rgba(177,82,255,.22),transparent);margin:28px 0;
+}
+.nx-trust-strip{
+  display:flex;gap:18px;flex-wrap:wrap;align-items:center;
+  margin-top:24px;color:#8f8f9f;font-size:12px
+}
+.nx-trust-strip span{
+  display:inline-flex;align-items:center;gap:7px;padding:8px 10px;border:1px solid rgba(255,255,255,.06);
+  border-radius:999px;background:rgba(255,255,255,.018)
+}
+.nx-trust-strip i{
+  width:6px;height:6px;border-radius:50%;background:#a84fff;box-shadow:0 0 12px rgba(168,79,255,.7)
+}
+.nx-footer-legal{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+.nx-footer-legal a{font-size:12px}
+.nx-sr-only{
+ position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;
+ overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important
+}
+@media(max-width:700px){
+ h1{max-width:none}
+ .hero p,.sub{font-size:15px!important;line-height:1.65!important}
+ .nx-trust-strip{gap:8px}
+ .nx-trust-strip span{font-size:11px}
+}
+
+</style>
+
+<meta name="theme-color" content="#050507">
+<meta name="robots" content="index,follow">
+<link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+<link rel="canonical" href="{{ site_url }}{{ request.path }}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NEXORA">
+<meta property="og:title" content="NEXORA Services — Web, Apps, 3D, Commerce & Software">
+<meta property="og:description" content="Explore Nexora services across premium websites, mobile apps, 3D experiences, e-commerce, AI integrations and custom software.">
+<meta property="og:url" content="{{ site_url }}{{ request.path }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NEXORA Services — Web, Apps, 3D, Commerce & Software">
+<meta name="twitter:description" content="Explore Nexora services across premium websites, mobile apps, 3D experiences, e-commerce, AI integrations and custom software.">
+
+
+<style>
+.n3d,.orbit,.ring,.portal,.portalCore,.constellation,.pillar,.stage,.panel3d,.holo,.core,.orb,.cube,.shard{
+ animation-play-state:var(--nx-paused,running)!important;
+}
+@media(max-width:700px){
+ #fx{opacity:.55}
+ .glow,.cursorGlow,.cursor{display:none!important}
+}
+</style>
+
+</head>
+<body data-nx-page="services">
+<a class="nx-skip nx-sr-only" href="#main-content">Skip to main content</a>
+<canvas id="fx"></canvas><div class="cursorGlow" id="cg"></div><div class="progress" id="progress"></div>
+
+<nav aria-label="Primary navigation">
+ <a href="index.html" class="brand" style="color:white;text-decoration:none"><div class="logo"></div>NEXORA</a>
+ <div class="links">
+   <a href="index.html">Home</a><a class="active" href="services.html">Services</a><a href="work.html">Work</a>
+   <a href="index.html#process">Process</a><a href="about.html">About</a><a href="contact.html">Contact</a>
+ </div>
+ <button class="btn magnetic">Start a Project ↗</button>
+</nav>
+
+<main id="main-content" class="wrap">
+ <section class="hero">
+  <div class="heroCopy">
+   <div class="kicker"><i></i> WHAT NEXORA BUILDS</div>
+   <h1>One Studio.<br><span class="grad">Every Digital Possibility.</span></h1>
+   <p>From a high-converting business website to an immersive 3D experience or a complete custom platform — we design and engineer digital products that make your business feel ahead of its category.</p>
+   <div class="actions"><button class="btn magnetic">Discuss Your Project →</button><button class="btn ghost magnetic">Explore Services ↓</button></div>
+  </div>
+  <div class="heroVisual">
+   <div class="holo">
+    <div class="ring"></div><div class="ring r2"></div><div class="ring r3"></div>
+    <div class="core"><span>✦</span></div>
+    <div class="node n1"></div><div class="node n2"></div><div class="node n3"></div><div class="node n4"></div>
+   </div>
+  </div>
+ </section>
+
+ <section class="section reveal" id="all-services">
+  <div class="sectionPad">
+   <div class="head"><div><div class="kicker"><i></i> CAPABILITIES</div><h2>Built for Businesses<br><span class="grad">That Want More.</span></h2></div><p class="sub">Choose a capability or combine several into one complete product. We shape the solution around the business, not around a template.</p></div>
+   <div class="filterBar">
+    <button class="filter active" data-filter="all">All</button><button class="filter" data-filter="web">Web</button><button class="filter" data-filter="mobile">Mobile</button>
+    <button class="filter" data-filter="immersive">3D / Immersive</button><button class="filter" data-filter="commerce">Commerce</button><button class="filter" data-filter="software">Software & AI</button>
+   </div>
+   <div class="grid" id="serviceGrid">
+    <article class="service" data-cat="web" data-service="static"><div class="icon">◫</div><h3>Static Websites</h3><p>Lightning-fast premium websites for brands that need a strong professional presence without unnecessary complexity.</p><div class="more">Explore capability →</div></article>
+    <article class="service" data-cat="web" data-service="dynamic"><div class="icon">⌘</div><h3>Dynamic Websites</h3><p>Content-driven websites with dashboards, authentication, databases, CMS and powerful business features.</p><div class="more">Explore capability →</div></article>
+    <article class="service" data-cat="web software" data-service="webapps"><div class="icon">&lt;/&gt;</div><h3>Web Applications</h3><p>SaaS, portals, booking systems, dashboards and workflow products engineered for real business operations.</p><div class="more">Explore capability →</div></article>
+    <article class="service" data-cat="mobile" data-service="mobile"><div class="icon">▯</div><h3>Mobile Apps</h3><p>Modern Android and iOS experiences designed around speed, usability, retention and business growth.</p><div class="more">Explore capability →</div></article>
+    <article class="service" data-cat="immersive web" data-service="3d"><div class="icon">◇</div><h3>3D Websites</h3><p>WebGL, interactive objects, product visualizers, architectural walkthroughs and cinematic digital experiences.</p><div class="more">Explore capability →</div></article>
+    <article class="service" data-cat="commerce web" data-service="ecommerce"><div class="icon">🛒</div><h3>E-Commerce</h3><p>Premium storefronts with smooth buying journeys, payments, catalogues, dashboards and growth-ready architecture.</p><div class="more">Explore capability →</div></article>
+    <article class="service" data-cat="software" data-service="software"><div class="icon">⚙</div><h3>Custom Software</h3><p>Internal tools, management systems, automation platforms and software built around your exact workflow.</p><div class="more">Explore capability →</div></article>
+    <article class="service" data-cat="software web" data-service="ai"><div class="icon">✦</div><h3>AI Integrations</h3><p>AI assistants, smart search, generation, document intelligence and automation integrated into your product.</p><div class="more">Explore capability →</div></article>
+   </div>
+
+   <div class="detail">
+    <div class="detailNav" id="detailNav"></div>
+    <div class="detailPanel" id="detailPanel"></div>
+   </div>
+  </div>
+ </section>
+
+ <section class="section reveal">
+  <div class="sectionPad">
+   <div class="head"><div><div class="kicker"><i></i> ENGAGEMENT MODELS</div><h2>From First Launch<br><span class="grad">to Serious Scale.</span></h2></div><p class="sub">Instead of publishing fixed prices before understanding the project, we scope the right level of design, engineering and support.</p></div>
+   <div class="tiers">
+    <div class="tier"><div class="type">FOUNDATION</div><h3>Launch</h3><p class="sub">For businesses creating or upgrading their digital presence.</p><ul><li>Strategy & page architecture</li><li>Premium responsive UI</li><li>Core development</li><li>SEO foundations</li><li>Launch support</li></ul><button class="btn ghost">Discuss Launch →</button></div>
+    <div class="tier featured"><div class="type">MOST FLEXIBLE</div><h3>Growth</h3><p class="sub">For companies that need deeper functionality and stronger differentiation.</p><ul><li>Custom UX & interaction system</li><li>Dynamic functionality</li><li>CMS / database integration</li><li>Advanced motion</li><li>Analytics & optimization</li></ul><button class="btn">Discuss Growth →</button></div>
+    <div class="tier"><div class="type">HIGH-COMPLEXITY</div><h3>Custom</h3><p class="sub">For SaaS, marketplaces, 3D products and complex software systems.</p><ul><li>Product discovery</li><li>Custom architecture</li><li>Web/mobile/AI integrations</li><li>Performance engineering</li><li>Long-term technical support</li></ul><button class="btn ghost">Discuss Custom →</button></div>
+   </div>
+  </div>
+ </section>
+
+ <section class="section reveal">
+  <div class="sectionPad">
+   <div class="kicker"><i></i> HOW WE DELIVER</div><h2 style="font-size:50px">A Clear Path From<br><span class="grad">Idea to Launch.</span></h2>
+   <div class="process">
+    <div class="step"><div class="num">01</div><h4>Discover</h4><p>Business goals, users, competitors and project requirements.</p></div>
+    <div class="step"><div class="num">02</div><h4>Architect</h4><p>Scope, user journeys, technology and product structure.</p></div>
+    <div class="step"><div class="num">03</div><h4>Design</h4><p>High-fidelity visual design, interaction and responsive behavior.</p></div>
+    <div class="step"><div class="num">04</div><h4>Build</h4><p>Front end, backend, integrations, testing and optimization.</p></div>
+    <div class="step"><div class="num">05</div><h4>Launch & Grow</h4><p>Deployment, monitoring, improvements and ongoing support.</p></div>
+   </div>
+  </div>
+ </section>
+
+ <section class="section reveal">
+  <div class="sectionPad">
+   <div class="head"><div><div class="kicker"><i></i> TECHNOLOGY</div><h2>Modern Stack.<br><span class="grad">Right Tool for the Job.</span></h2></div><p class="sub">Technology choices depend on your product requirements. The objective is always the same: fast, reliable and maintainable.</p></div>
+   <div class="tech">
+    <div class="pill">HTML5</div><div class="pill">CSS3</div><div class="pill">JavaScript</div><div class="pill">React</div>
+    <div class="pill">Next.js</div><div class="pill">Three.js</div><div class="pill">Python</div><div class="pill">Flask</div>
+    <div class="pill">Node.js</div><div class="pill">PHP</div><div class="pill">MongoDB</div><div class="pill">MySQL</div>
+    <div class="pill">REST APIs</div><div class="pill">Cloud</div><div class="pill">AI APIs</div><div class="pill">Payments</div>
+   </div>
+  </div>
+ </section>
+
+ <section class="section reveal">
+  <div class="sectionPad">
+   <div class="kicker"><i></i> COMMON QUESTIONS</div><h2 style="font-size:50px">Before We<br><span class="grad">Start Building.</span></h2>
+   <div id="faq">
+    <div class="faqItem"><div class="faqQ">Can Nexora handle both design and development?<span>+</span></div><div class="faqA">Yes. The experience is planned, designed and engineered as one system, so visual quality and technical quality do not fight each other.</div></div>
+    <div class="faqItem"><div class="faqQ">Can you build a website with advanced 3D interaction?<span>+</span></div><div class="faqA">Yes. 3D experiences can include interactive objects, product visualization, WebGL scenes, motion-driven storytelling and virtual spaces, depending on the project.</div></div>
+    <div class="faqItem"><div class="faqQ">Do you also build dashboards, portals and business software?<span>+</span></div><div class="faqA">Yes. Nexora can build authenticated applications, admin dashboards, booking systems, internal tools, databases, APIs and custom workflows.</div></div>
+    <div class="faqItem"><div class="faqQ">Will the final website work properly on mobile?<span>+</span></div><div class="faqA">Responsive behavior is designed from the beginning. Interactions are adjusted for touch devices rather than simply shrinking the desktop experience.</div></div>
+    <div class="faqItem"><div class="faqQ">Can you maintain the product after launch?<span>+</span></div><div class="faqA">Yes. Ongoing maintenance can cover technical updates, performance, content changes, analytics, feature improvements and future expansion.</div></div>
+   </div>
+  </div>
+ </section>
+
+ <section class="section final reveal" id="contact">
+   <div>
+    <div class="kicker"><i></i> YOUR IDEA + NEXORA</div>
+    <h2>Let's Turn It Into<br><span class="grad">Something Remarkable.</span></h2>
+    <p class="sub">Tell us what you want to build. We'll help shape the right experience, feature set and technology around the business goal.</p>
+    <div class="actions"><button class="btn magnetic">Start Your Project →</button><a class="btn ghost magnetic" href="work.html" style="text-decoration:none">See Our Work ↗</a></div>
+   </div>
+   <div class="finalOrb"><div class="finalCore"></div></div>
+ </section>
+</main>
+
+<footer>
+ <div><div class="brand"><div class="logo"></div>NEXORA</div><p style="max-width:320px">Premium websites, apps, 3D experiences and custom software built to make businesses stand out.</p></div>
+ <div><h4>Services</h4><a href="#all-services">Websites</a><a href="#all-services">Mobile Apps</a><a href="#all-services">3D Experiences</a><a href="#all-services">Custom Software</a></div>
+ <div><h4>Company</h4><a href="about.html">About</a><a href="work.html">Work</a><a href="index.html#process">Process</a><a href="contact.html">Contact</a></div>
+ <div><h4>Contact</h4><a href="#">Project Enquiry</a><a href="#">Email</a><a href="#">WhatsApp</a><p>© 2026 Nexora</p></div>
+</footer>
+
+<script>
+const data={
+ static:{title:"Static Websites",lead:"Premium, fast-loading business websites built to create immediate trust.",desc:"Best for companies that need a polished digital presence, campaign site, portfolio or informational website without complex account systems.",deliver:["Custom responsive UI","High-performance front end","Contact & lead forms","SEO foundations","Analytics setup","Launch support"],tags:["Brand websites","Landing pages","Corporate sites","Portfolios"]},
+ dynamic:{title:"Dynamic Websites",lead:"Websites that do more than display information.",desc:"Ideal when content, users or business data needs to change dynamically through databases, admin dashboards or external integrations.",deliver:["Secure authentication","Database integration","Admin dashboard","CMS functionality","API integration","Role-based access"],tags:["CMS","Portals","Membership","Directories"]},
+ webapps:{title:"Web Applications",lead:"Full products that run in the browser.",desc:"From internal dashboards to SaaS platforms, booking systems and business portals, we design the UX and engineer the complete product workflow.",deliver:["Product architecture","Frontend application","Backend APIs","Database design","Authentication","Deployment"],tags:["SaaS","Dashboards","Booking","Business systems"]},
+ mobile:{title:"Mobile Apps",lead:"Mobile products people actually enjoy using.",desc:"We design app journeys around clarity, speed and retention, then connect them to scalable backend systems and business data.",deliver:["Android / iOS UX","Authentication","Push-ready architecture","API backend","Payments / integrations","Store-launch support"],tags:["Android","iOS","Business apps","Consumer apps"]},
+ "3d":{title:"3D & Immersive Websites",lead:"Turn a website into an experience.",desc:"For products, architecture, premium brands and launches where a conventional page is not enough. We combine real-time 3D, motion and interaction carefully so the experience remains usable.",deliver:["WebGL scenes","3D product interaction","Virtual walkthrough concepts","Scroll-driven animation","Performance optimization","Mobile fallbacks"],tags:["Three.js","WebGL","Architecture","Product visualization"]},
+ ecommerce:{title:"E-Commerce",lead:"Premium storefronts engineered to convert.",desc:"We build clean buying journeys, catalogue systems and integrations that make browsing, checkout and store management feel effortless.",deliver:["Product catalogue","Cart & checkout","Payment gateway","Order management","Admin tools","Analytics"],tags:["D2C","Retail","Catalogues","Payments"]},
+ software:{title:"Custom Software",lead:"Software designed around your workflow — not the other way around.",desc:"For businesses that have outgrown spreadsheets or generic tools. We map the actual process and build the system around how your team works.",deliver:["Workflow discovery","Custom dashboards","Role-based systems","Automation","Reporting","Cloud deployment"],tags:["ERP modules","Operations","CRM tools","Automation"]},
+ ai:{title:"AI Integrations",lead:"Practical AI inside real products.",desc:"We integrate AI where it creates genuine business value — assistants, generation, smart search, document processing and task automation.",deliver:["AI assistants","Content generation","Smart search","Document workflows","API integration","Usage controls"],tags:["LLMs","Automation","Search","Generative AI"]}
+};
+
+const order=["static","dynamic","webapps","mobile","3d","ecommerce","software","ai"];
+const detailNav=document.getElementById("detailNav"), panel=document.getElementById("detailPanel");
+
+function renderNav(){
+ detailNav.innerHTML='<div class="kicker" style="margin:4px 0 12px"><i></i> SERVICE EXPLORER</div>'+
+ order.map((k,i)=>`<div class="detailTab ${i===0?'active':''}" data-k="${k}"><b>${String(i+1).padStart(2,'0')}</b>${data[k].title}</div>`).join('');
+ detailNav.querySelectorAll(".detailTab").forEach(t=>t.onclick=()=>showDetail(t.dataset.k));
+}
+function showDetail(k){
+ const d=data[k];
+ detailNav.querySelectorAll(".detailTab").forEach(t=>t.classList.toggle("active",t.dataset.k===k));
+ panel.animate([{opacity:.15,transform:"translateY(10px)"},{opacity:1,transform:"none"}],{duration:360,easing:"ease-out"});
+ panel.innerHTML=`<div class="kicker"><i></i> ${d.lead}</div><h3>${d.title}</h3><p>${d.desc}</p>
+ <div class="deliver">${d.deliver.map(x=>`<div><span>✦</span>${x}</div>`).join("")}</div>
+ <div class="tags">${d.tags.map(x=>`<span class="tag">${x}</span>`).join("")}</div>
+ <div class="actions"><button class="btn">Build This With Nexora →</button><button class="btn ghost">Ask About This Service ↗</button></div>`;
+}
+renderNav();showDetail("static");
+
+document.querySelectorAll(".service").forEach(card=>{
+ card.addEventListener("click",()=>{showDetail(card.dataset.service);document.querySelector(".detail").scrollIntoView({behavior:"smooth",block:"center"})});
+ card.addEventListener("pointermove",e=>{
+  const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+  card.style.transform=`perspective(800px) rotateX(${-y*5}deg) rotateY(${x*6}deg) translateY(-5px)`;
+ });
+ card.addEventListener("pointerleave",()=>card.style.transform="");
+});
+
+document.querySelectorAll(".filter").forEach(f=>f.onclick=()=>{
+ document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));f.classList.add("active");
+ const v=f.dataset.filter;
+ document.querySelectorAll(".service").forEach(card=>{
+  const ok=v==="all"||card.dataset.cat.split(" ").includes(v);
+  card.classList.toggle("hidden",!ok);
+  if(ok) card.animate([{opacity:0,transform:"scale(.96)"},{opacity:1,transform:"none"}],{duration:320,easing:"ease-out"});
+ });
+});
+
+document.querySelectorAll(".faqQ").forEach(q=>q.onclick=()=>{
+ const item=q.parentElement; const open=item.classList.contains("open");
+ document.querySelectorAll(".faqItem").forEach(x=>x.classList.remove("open"));
+ document.querySelectorAll(".faqQ span").forEach(x=>x.textContent="+");
+ if(!open){item.classList.add("open");q.querySelector("span").textContent="−"}
+});
+
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("on");io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(x=>io.observe(x));
+
+const cg=document.getElementById("cg");
+addEventListener("pointermove",e=>{cg.style.left=e.clientX+"px";cg.style.top=e.clientY+"px"});
+document.querySelectorAll(".magnetic").forEach(el=>{
+ el.addEventListener("pointermove",e=>{const r=el.getBoundingClientRect(),x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-r.height/2;el.style.transform=`translate(${x*.10}px,${y*.10}px)`});
+ el.addEventListener("pointerleave",()=>el.style.transform="");
+});
+
+const progress=document.getElementById("progress");
+addEventListener("scroll",()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=(scrollY/max*100)+"%"},{passive:true});
+
+const holo=document.querySelector(".holo"),hv=document.querySelector(".heroVisual");
+hv.addEventListener("pointermove",e=>{const r=hv.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;holo.style.transform=`rotateY(${x*12}deg) rotateX(${-y*9}deg) translateY(${y*10}px)`});
+hv.addEventListener("pointerleave",()=>holo.style.transform="");
+
+const c=document.getElementById("fx"),ctx=c.getContext("2d");let W,H,dpr=Math.min(devicePixelRatio||1,2),pts=[];
+function size(){W=c.width=innerWidth*dpr;H=c.height=innerHeight*dpr;pts=Array.from({length:95},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.16*dpr,vy:(Math.random()-.5)*.16*dpr,r:(Math.random()*1.25+.35)*dpr,a:Math.random()*.45+.12}))}
+function loop(){ctx.clearRect(0,0,W,H);for(let i=0;i<pts.length;i++){const p=pts[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(173,81,255,${p.a})`;ctx.shadowBlur=10*dpr;ctx.shadowColor="rgba(137,55,255,.5)";ctx.fill();ctx.shadowBlur=0;if(i<35)for(let j=i+1;j<35;j++){const q=pts[j],d=Math.hypot(p.x-q.x,p.y-q.y);if(d<100*dpr){ctx.strokeStyle=`rgba(139,57,255,${(1-d/(100*dpr))*.055})`;ctx.lineWidth=.5*dpr;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke()}}}requestAnimationFrame(loop)}
+size();loop();addEventListener("resize",size);
+</script>
+
+<script>
+(function(){
+  // Loader
+  const loader=document.createElement("div");
+  loader.className="nx-page-loader";
+  loader.innerHTML='<div class="nx-loader-inner"><div class="nx-loader-logo"></div><div class="nx-loader-bar"><span></span></div><div class="nx-loader-text">NEXORA EXPERIENCE</div></div>';
+  document.body.prepend(loader);
+
+  const transition=document.createElement("div");
+  transition.className="nx-transition";
+  transition.innerHTML="<span></span><span></span><span></span><span></span>";
+  document.body.appendChild(transition);
+
+  window.addEventListener("load",()=>setTimeout(()=>loader.classList.add("hide"),450));
+
+  // Mobile menu
+  const nav=document.querySelector("nav");
+  if(nav){
+    const btn=document.createElement("button");
+    btn.className="nx-menu-btn";
+    btn.setAttribute("aria-label","Open navigation");
+    btn.innerHTML="<span></span><span></span><span></span>";
+    nav.appendChild(btn);
+
+    const menu=document.createElement("div");
+    menu.className="nx-mobile-menu";
+    const links=[
+      ["Home","/"],
+      ["Services","/services"],
+      ["Work","/work"],
+      ["About","/about"],
+      ["Start a Project","/contact"]
+    ];
+    menu.innerHTML='<div class="nx-mobile-menu-inner"><div class="nx-mobile-caption">NEXORA / NAVIGATION</div>'+
+      links.map(([n,h])=>`<a href="${h}">${n}<span style="float:right;color:#b86cff">↗</span></a>`).join("")+
+      '</div>';
+    document.body.appendChild(menu);
+
+    const toggle=()=>{btn.classList.toggle("open");menu.classList.toggle("open");document.body.style.overflow=menu.classList.contains("open")?"hidden":""};
+    btn.addEventListener("click",toggle);
+    menu.addEventListener("click",e=>{if(e.target===menu)toggle()});
+  }
+
+  // Cinematic internal navigation
+  document.addEventListener("click",e=>{
+    const a=e.target.closest("a");
+    if(!a)return;
+    const href=a.getAttribute("href");
+    if(!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:") ||
+       href.startsWith("https://wa.me") || a.target==="_blank") return;
+    const url=new URL(a.href,location.href);
+    if(url.origin!==location.origin)return;
+    e.preventDefault();
+    transition.classList.add("active");
+    setTimeout(()=>location.href=url.href,560);
+  });
+
+  // Generic reveal for key page blocks
+  const blocks=document.querySelectorAll(".section,.project,.card,.principle,.expectCard,.quickCard,.storyCard");
+  blocks.forEach(x=>x.classList.add("nx-fade-up"));
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add("nx-in");io.unobserve(e.target)}
+  }),{threshold:.08});
+  blocks.forEach(x=>io.observe(x));
+
+  // Better touch: disable aggressive tilt on coarse pointers
+  if(matchMedia("(pointer: coarse)").matches){
+    document.querySelectorAll(".card,.project,.service,.principle,.expectCard,.storyCard").forEach(el=>{
+      el.style.transform="";
+      el.onpointermove=null;
+    });
+  }
+
+  // Global visibility pause hint for animation-heavy pages
+  document.addEventListener("visibilitychange",()=>{
+    document.documentElement.style.setProperty("--nx-paused",document.hidden?"paused":"running");
+  });
+})();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='nexora-three.js') }}"></script>
+
+</body>
+</html>
