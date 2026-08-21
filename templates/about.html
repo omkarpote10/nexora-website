@@ -265,6 +265,69 @@ h1{max-width:16ch}
  .nx-trust-strip span{font-size:11px}
 }
 
+
+/* ===== V13 ADAPTIVE PERFORMANCE ===== */
+:root{--nx-run:running}
+[data-nx-perf="medium"] #fx{opacity:.42!important}
+[data-nx-perf="low"] #fx,[data-nx-perf="reduced"] #fx{opacity:.14!important}
+
+[data-nx-perf="medium"] .glow,
+[data-nx-perf="medium"] .cursorGlow,
+[data-nx-perf="medium"] .cursor{opacity:.45!important}
+
+[data-nx-perf="low"] .glow,
+[data-nx-perf="low"] .cursorGlow,
+[data-nx-perf="low"] .cursor,
+[data-nx-perf="reduced"] .glow,
+[data-nx-perf="reduced"] .cursorGlow,
+[data-nx-perf="reduced"] .cursor{display:none!important}
+
+[data-nx-perf="low"] nav,
+[data-nx-perf="low"] .nx-mobile-menu,
+[data-nx-perf="reduced"] nav,
+[data-nx-perf="reduced"] .nx-mobile-menu{
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  background:rgba(5,5,9,.96)!important;
+}
+
+[data-nx-perf="medium"] .section,
+[data-nx-perf="medium"] .card,
+[data-nx-perf="medium"] .project{
+  box-shadow:0 15px 34px rgba(0,0,0,.18)!important;
+}
+
+[data-nx-perf="low"] .section,
+[data-nx-perf="low"] .card,
+[data-nx-perf="low"] .project,
+[data-nx-perf="reduced"] .section,
+[data-nx-perf="reduced"] .card,
+[data-nx-perf="reduced"] .project{
+  box-shadow:0 9px 20px rgba(0,0,0,.14)!important;
+  filter:none!important;
+}
+
+[data-nx-perf="low"] .reveal,
+[data-nx-perf="low"] .nx-fade-up,
+[data-nx-perf="reduced"] .reveal,
+[data-nx-perf="reduced"] .nx-fade-up{filter:none!important}
+
+[data-nx-perf="low"] .shard,
+[data-nx-perf="low"] .orbit.o2,
+[data-nx-perf="low"] .nx-story-indicator{display:none!important}
+
+.nx-offscreen *{animation-play-state:paused!important}
+
+@media(max-width:700px){
+  .heroCopy,.hero-copy{padding-top:38px!important;padding-bottom:30px!important}
+  .hero-visual,.heroVisual{height:320px!important;min-height:320px!important}
+  h1{font-size:clamp(44px,13.5vw,62px)!important;line-height:.96!important}
+  .actions{margin-top:20px!important}
+}
+@media(max-width:430px){
+  .hero-visual,.heroVisual{height:280px!important;min-height:280px!important}
+}
+
 </style>
 
 <meta name="theme-color" content="#050507">
@@ -533,6 +596,7 @@ size();loop();addEventListener("resize",size);
 </script>
 
 
+<script src="{{ url_for('static', filename='nexora-performance.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" crossorigin="anonymous"></script>
 <script src="{{ url_for('static', filename='nexora-three.js') }}"></script>
 
