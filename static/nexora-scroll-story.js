@@ -1,5 +1,6 @@
 
 (function(){
+  if(window.__NEXORA_DISABLE_WEBGL__) return;
   if(!window.THREE) return;
   const page=document.body.dataset.nxPage;
   if(page!=="home") return;
