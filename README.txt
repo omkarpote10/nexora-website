@@ -1,38 +1,27 @@
-NEXORA SITE V13 — ADAPTIVE PERFORMANCE
+NEXORA SITE V14 — MOBILE SAFE MODE
 
-Same NEXORA design, but now the rendering load automatically adapts to the visitor's device.
+WHY THIS VERSION EXISTS
+V13 still lagged heavily on a real Android phone. V14 therefore uses a stronger production rule:
 
-HIGH:
-- Full Three.js quality
-- Full particle field
-- Full cinematic scroll story
-- Higher WebGL pixel ratio
+MOBILE / TOUCH DEVICES
+- Three.js disabled completely
+- WebGL disabled completely
+- cinematic scroll story disabled
+- full-screen particle canvas disabled
+- blur/backdrop-filter reduced
+- hover 3D tilt removed
+- lighter CSS animations only
+- same NEXORA layout, colors and branding retained
 
-MEDIUM:
-- About half the particles
-- Lower WebGL pixel ratio
-- Reduced blur/shadows
-- Lighter scroll story
+DESKTOP / CAPABLE DEVICES
+- Full Three.js / WebGL remains enabled
+- cinematic scroll storytelling remains enabled
+- full visual effects remain available
 
-LOW:
-- Minimal particle load
-- DPR capped at 1
-- Heavy blur removed
-- Nonessential decoration hidden
-- Off-screen animation paused
+THIS IS THE RECOMMENDED PRODUCTION APPROACH
+Premium desktop experience + smooth mobile experience.
 
-REDUCED MOTION:
-- Respects device accessibility preference
-
-Also optimized:
-- smaller mobile hero render area
-- less continuous GPU work
-- page-hidden animation pausing
-- off-screen section animation pausing
-- same backend/CRM/features retained
-
-DEPLOYMENT:
-Upload/replace these V13 files in the same GitHub repository.
+DEPLOY
+Replace the current GitHub files with V14.
 Render will automatically redeploy.
-
 Do not change your existing Render environment variables.
