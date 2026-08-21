@@ -3,6 +3,7 @@
   const page = document.body.dataset.nxPage || "home";
   const isReduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const coarse = matchMedia("(pointer: coarse)").matches;
+  const perf = window.__NEXORA_PERF__ || {tier:"high",particleScale:1,dprCap:1.8,story:"full"};
 
   const selectors = {
     home: ".hero-visual",
@@ -30,7 +31,7 @@
 
   const canvas = shell.querySelector("canvas");
   const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true, powerPreference:"high-performance"});
-  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, coarse ? 1.35 : 1.8));
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, perf.dprCap || 1.8));
   renderer.setClearColor(0x000000,0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -95,7 +96,7 @@
     scene.add(pts);
     return pts;
   }
-  const particles = addParticles(coarse?120:260,12);
+  const particles = addParticles(Math.max(10, Math.floor((coarse?120:260) * (perf.particleScale ?? 1))),12);
 
   function addOrbit(radius=2.5,tube=.013,rot=[Math.PI/2,0,0],opacity=.36){
     const geo = new THREE.TorusGeometry(radius,tube,8,180);

@@ -75,7 +75,7 @@
     serviceGroup.add(m);serviceObjects.push(m);
   }
 
-  const trailCount=180;
+  const trailCount=perf.story==="full"?180:perf.story==="lite"?64:18;
   const trailGeo=new THREE.BufferGeometry();
   const trailPos=new Float32Array(trailCount*3);
   for(let i=0;i<trailCount;i++){
@@ -92,6 +92,7 @@
   scene.add(trail);
 
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const perf=window.__NEXORA_PERF__||{story:"full",tier:"high"};
   const coarse=matchMedia("(pointer: coarse)").matches;
   let chapter="hero",progress=0,targetCameraZ=8.5,targetCameraY=0,targetRootY=0;
   let burst=0,prevChapter="hero";
@@ -281,7 +282,7 @@
   addEventListener("scroll",updateIndicator,{passive:true});
   updateIndicator();
 
-  if(coarse){
+  if(coarse || perf.story!=="full"){
     indicator.style.display="none";
   }
 })();
