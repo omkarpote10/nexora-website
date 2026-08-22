@@ -31,7 +31,7 @@
   host.appendChild(shell);
 
   const canvas = shell.querySelector("canvas");
-  const renderer = new THREE.WebGLRenderer({canvas, antialias:!coarse, alpha:true, powerPreference:"high-performance"});
+  const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true, powerPreference:"high-performance"});
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, perf.dprCap || 1.8));
   renderer.setClearColor(0x000000,0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -112,109 +112,193 @@
     const g = new THREE.Group();
     rootGroup.add(g);
 
-    // Outer crystal cube.
+    // Clean smoked-glass outer volume.
     const glass = new THREE.MeshPhysicalMaterial({
-      color:0x37115f,
-      metalness:.58,
-      roughness:.12,
+      color:0x1c082e,
+      metalness:.18,
+      roughness:.08,
       transparent:true,
-      opacity:.72,
+      opacity:.34,
       clearcoat:1,
-      clearcoatRoughness:.06,
-      emissive:0x2a004c,
-      emissiveIntensity:.68,
-      side:THREE.DoubleSide
+      clearcoatRoughness:.03,
+      emissive:0x180026,
+      emissiveIntensity:.38,
+      transmission:.06,
+      side:THREE.DoubleSide,
+      depthWrite:false
     });
+
     const innerMat = new THREE.MeshPhysicalMaterial({
-      color:0x110919,
-      metalness:.86,
-      roughness:.22,
+      color:0x0b0610,
+      metalness:.62,
+      roughness:.18,
+      transparent:true,
+      opacity:.42,
       clearcoat:1,
-      emissive:0x170026,
-      emissiveIntensity:.45
+      clearcoatRoughness:.08,
+      emissive:0x140020,
+      emissiveIntensity:.34
     });
-    const cube = new THREE.Mesh(new THREE.BoxGeometry(3.35,3.35,3.35,3,3,3),glass);
-    const inner = new THREE.Mesh(new THREE.BoxGeometry(2.72,2.72,2.72,2,2,2),innerMat);
+
+    const cube = new THREE.Mesh(new THREE.BoxGeometry(3.25,3.25,3.25,1,1,1),glass);
+    const inner = new THREE.Mesh(new THREE.BoxGeometry(2.86,2.86,2.86,1,1,1),innerMat);
     g.add(cube,inner);
 
-    // Neon bevel-like edge cage.
-    const edgeGeo = new THREE.EdgesGeometry(new THREE.BoxGeometry(3.42,3.42,3.42));
-    const edgeMat = new THREE.LineBasicMaterial({color:0xc777ff,transparent:true,opacity:.88});
-    const edges = new THREE.LineSegments(edgeGeo,edgeMat);
-    g.add(edges);
+    // Smooth neon beams replace jagged EdgesGeometry.
+    const edgeCoreMat = new THREE.MeshBasicMaterial({
+      color:0xe0a0ff,transparent:true,opacity:.96,blending:THREE.AdditiveBlending
+    });
+    const edgeGlowMat = new THREE.MeshBasicMaterial({
+      color:0xa443ff,transparent:true,opacity:.20,blending:THREE.AdditiveBlending,depthWrite:false
+    });
+    const cornerMat = new THREE.MeshBasicMaterial({
+      color:0xf0c3ff,transparent:true,opacity:.95,blending:THREE.AdditiveBlending
+    });
 
-    // Internal diagonal crystal panels for faceted texture.
+    const edgeGroup = new THREE.Group();
+    const glowEdgeGroup = new THREE.Group();
+    const cornerGroup = new THREE.Group();
+
+    function beamBetween(a,b,radius,material,segments=10){
+      const mid=a.clone().add(b).multiplyScalar(.5);
+      const len=a.distanceTo(b);
+      const mesh=new THREE.Mesh(new THREE.CylinderGeometry(radius,radius,len,segments,1,false),material);
+      mesh.position.copy(mid);
+      const q=new THREE.Quaternion();
+      q.setFromUnitVectors(new THREE.Vector3(0,1,0),b.clone().sub(a).normalize());
+      mesh.quaternion.copy(q);
+      return mesh;
+    }
+
+    const h=1.66;
+    const V=[
+      new THREE.Vector3(-h,-h,-h),new THREE.Vector3(h,-h,-h),
+      new THREE.Vector3(-h,h,-h), new THREE.Vector3(h,h,-h),
+      new THREE.Vector3(-h,-h,h), new THREE.Vector3(h,-h,h),
+      new THREE.Vector3(-h,h,h),  new THREE.Vector3(h,h,h)
+    ];
+    const E=[
+      [0,1],[2,3],[4,5],[6,7],
+      [0,2],[1,3],[4,6],[5,7],
+      [0,4],[1,5],[2,6],[3,7]
+    ];
+    E.forEach(([i,j])=>{
+      edgeGroup.add(beamBetween(V[i],V[j],.020,edgeCoreMat,12));
+      glowEdgeGroup.add(beamBetween(V[i],V[j],.055,edgeGlowMat,10));
+    });
+    V.forEach(v=>{
+      const s=new THREE.Mesh(new THREE.SphereGeometry(.045,12,10),cornerMat);
+      s.position.copy(v);
+      cornerGroup.add(s);
+    });
+    g.add(glowEdgeGroup,edgeGroup,cornerGroup);
+
+    // Refined crystalline interior: fewer planes, softer opacity.
     const facets = new THREE.Group();
     const facetMat = new THREE.MeshBasicMaterial({
-      color:0x9c45ff,transparent:true,opacity:.10,side:THREE.DoubleSide,
+      color:0x8f36e8,transparent:true,opacity:.055,side:THREE.DoubleSide,
       blending:THREE.AdditiveBlending,depthWrite:false
     });
-    for(let i=0;i<6;i++){
-      const p=new THREE.Mesh(new THREE.PlaneGeometry(3.5,3.5),facetMat.clone());
-      p.rotation.set((i%3)*Math.PI/3,(i%2)*Math.PI/4,(i*.37));
+    const rotations=[
+      [.7,.15,.25],[-.65,.55,-.3],[.25,-.72,.55],
+      [1.05,.32,-.6]
+    ];
+    rotations.forEach((r,i)=>{
+      const p=new THREE.Mesh(new THREE.PlaneGeometry(3.15,3.15),facetMat.clone());
+      p.rotation.set(...r);
+      p.material.opacity=.04+i*.008;
       facets.add(p);
-    }
+    });
     g.add(facets);
 
-    // NEXORA text texture.
+    // Crisp NEXORA face branding.
     function textTexture(text){
       const cn=document.createElement("canvas");
       cn.width=1024;cn.height=256;
       const cx=cn.getContext("2d");
       cx.clearRect(0,0,cn.width,cn.height);
       const grd=cx.createLinearGradient(0,0,cn.width,0);
-      grd.addColorStop(0,"#f4e7ff");grd.addColorStop(.5,"#c67cff");grd.addColorStop(1,"#8b39ff");
+      grd.addColorStop(0,"#ffffff");
+      grd.addColorStop(.55,"#d795ff");
+      grd.addColorStop(1,"#9e48ff");
       cx.fillStyle=grd;
-      cx.font="800 128px Arial, sans-serif";
+      cx.font="800 122px Arial, sans-serif";
       cx.textAlign="center";cx.textBaseline="middle";
-      cx.shadowColor="#a948ff";cx.shadowBlur=30;
+      cx.shadowColor="#aa4dff";cx.shadowBlur=20;
       cx.fillText(text,512,130);
       const tex=new THREE.CanvasTexture(cn);
       tex.colorSpace=THREE.SRGBColorSpace;
       tex.anisotropy=Math.min(4,renderer.capabilities.getMaxAnisotropy());
       return tex;
     }
+
     const brandTex=textTexture("NEXORA");
-    const brandMat=new THREE.MeshBasicMaterial({map:brandTex,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending});
-    const brandFront=new THREE.Mesh(new THREE.PlaneGeometry(2.65,.72),brandMat);
-    brandFront.position.z=1.725;
+    const brandMat=new THREE.MeshBasicMaterial({
+      map:brandTex,transparent:true,opacity:.96,depthWrite:false,
+      blending:THREE.AdditiveBlending
+    });
+    const brandFront=new THREE.Mesh(new THREE.PlaneGeometry(2.52,.65),brandMat);
+    brandFront.position.z=1.685;
     g.add(brandFront);
-    const brandRight=new THREE.Mesh(new THREE.PlaneGeometry(2.65,.72),brandMat.clone());
-    brandRight.position.x=1.725;brandRight.rotation.y=Math.PI/2;
+
+    // Subtle right-face logo so rotation still feels branded.
+    const brandRight=new THREE.Mesh(new THREE.PlaneGeometry(2.25,.58),brandMat.clone());
+    brandRight.position.x=1.685;
+    brandRight.rotation.y=Math.PI/2;
+    brandRight.material.opacity=.55;
     g.add(brandRight);
 
-    // Glowing pedestal.
+    // Premium layered pedestal closer to the reference.
     const baseMat=new THREE.MeshPhysicalMaterial({
-      color:0x100817,metalness:.72,roughness:.28,clearcoat:.8,
-      emissive:0x1c0030,emissiveIntensity:.48
+      color:0x09060d,metalness:.72,roughness:.26,clearcoat:.9,
+      emissive:0x13001f,emissiveIntensity:.36
     });
-    const base1=new THREE.Mesh(new THREE.BoxGeometry(4.8,.24,4.8),baseMat);
-    base1.position.y=-2.55;
-    const base2=new THREE.Mesh(new THREE.BoxGeometry(4.15,.16,4.15),baseMat.clone());
-    base2.position.y=-2.35;
-    g.add(base1,base2);
+    const base1=new THREE.Mesh(new THREE.BoxGeometry(5.0,.23,5.0),baseMat);
+    base1.position.y=-2.62;
+    const base2=new THREE.Mesh(new THREE.BoxGeometry(4.45,.12,4.45),baseMat.clone());
+    base2.position.y=-2.40;
+    const base3=new THREE.Mesh(new THREE.BoxGeometry(3.65,.08,3.65),baseMat.clone());
+    base3.position.y=-2.25;
+    g.add(base1,base2,base3);
 
     const pad=new THREE.Mesh(
-      new THREE.BoxGeometry(1.15,.035,1.15),
-      new THREE.MeshBasicMaterial({color:0xd18aff,transparent:true,opacity:.86,blending:THREE.AdditiveBlending})
+      new THREE.BoxGeometry(.92,.028,.92),
+      new THREE.MeshBasicMaterial({
+        color:0xe2b5ff,transparent:true,opacity:.92,
+        blending:THREE.AdditiveBlending
+      })
     );
-    pad.position.y=-2.24;g.add(pad);
+    pad.position.y=-2.17;
+    g.add(pad);
 
-    const ring1=addOrbit(3.05,.012,[Math.PI/2.22,.08,-.08],.28);
-    const ring2=addOrbit(2.35,.009,[1.02,.55,.4],.18);
+    // Ground glow discs.
+    const discMat=new THREE.MeshBasicMaterial({
+      color:0x9c3dff,transparent:true,opacity:.10,
+      blending:THREE.AdditiveBlending,depthWrite:false
+    });
+    const disc1=new THREE.Mesh(new THREE.CircleGeometry(2.9,72),discMat);
+    disc1.rotation.x=-Math.PI/2;disc1.position.y=-2.155;g.add(disc1);
+    const disc2=new THREE.Mesh(new THREE.RingGeometry(2.2,2.23,96),new THREE.MeshBasicMaterial({
+      color:0xb659ff,transparent:true,opacity:.34,side:THREE.DoubleSide,
+      blending:THREE.AdditiveBlending
+    }));
+    disc2.rotation.x=-Math.PI/2;disc2.position.y=-2.145;g.add(disc2);
 
-    // Split pieces - hidden while assembled.
+    const ring1=addOrbit(3.0,.009,[Math.PI/2.05,.03,-.02],.20);
+    const ring2=addOrbit(2.35,.006,[1.18,.38,.25],.10);
+
+    // Split pieces retained, but softened so animation stays premium.
     const pieces=new THREE.Group();
     const pieceData=[];
-    const miniGeo=new THREE.BoxGeometry(.82,.82,.82,1,1,1);
+    const miniGeo=new THREE.BoxGeometry(.78,.78,.78,1,1,1);
     for(let x=-1;x<=1;x++)for(let y=-1;y<=1;y++)for(let z=-1;z<=1;z++){
       const pm=new THREE.MeshPhysicalMaterial({
-        color:(x+y+z)%2===0?0x7d28d8:0x3b155b,
-        metalness:.68,roughness:.18,clearcoat:1,
-        transparent:true,opacity:.9,emissive:0x25003f,emissiveIntensity:.5
+        color:(x+y+z)%2===0?0x6e24bb:0x35134f,
+        metalness:.55,roughness:.20,clearcoat:.8,
+        transparent:true,opacity:.84,emissive:0x200034,emissiveIntensity:.38
       });
       const m=new THREE.Mesh(miniGeo,pm);
-      const home=new THREE.Vector3(x*.94,y*.94,z*.94);
+      const home=new THREE.Vector3(x*.91,y*.91,z*.91);
       m.position.copy(home);
       pieces.add(m);
       const dir=home.clone();
@@ -225,31 +309,34 @@
     pieces.visible=false;
     g.add(pieces);
 
-    // Dedicated split-particle burst.
-    const burstCount=150;
+    const burstCount=coarse?70:130;
     const burstGeo=new THREE.BufferGeometry();
     const burstPos=new Float32Array(burstCount*3);
     const burstDir=[];
     for(let i=0;i<burstCount;i++){
       burstPos[i*3]=0;burstPos[i*3+1]=0;burstPos[i*3+2]=0;
-      const v=new THREE.Vector3(Math.random()-.5,Math.random()-.5,Math.random()-.5).normalize();
-      burstDir.push(v);
+      burstDir.push(new THREE.Vector3(
+        Math.random()-.5,Math.random()-.5,Math.random()-.5
+      ).normalize());
     }
     burstGeo.setAttribute("position",new THREE.BufferAttribute(burstPos,3));
     const burstMat=new THREE.PointsMaterial({
-      color:0xc46eff,size:.045,transparent:true,opacity:0,depthWrite:false,
-      blending:THREE.AdditiveBlending
+      color:0xc66cff,size:coarse?.030:.042,transparent:true,opacity:0,
+      depthWrite:false,blending:THREE.AdditiveBlending
     });
     const burstPts=new THREE.Points(burstGeo,burstMat);
     g.add(burstPts);
 
-    g.rotation.set(-.18,.58,.08);
-    g.position.y=.25;
+    // Stable showcase angle: front + top + right face always read as a cube.
+    g.rotation.set(-.34,.56,.015);
+    g.position.y=.20;
+    g.scale.setScalar(coarse?.88:1);
 
     return {
-      type:"cube",g,cube,inner,edges,facets,brandFront,brandRight,
-      base1,base2,pad,ring1,ring2,pieces,pieceData,burstPts,burstDir,
-      split:0,splitTarget:0,burst:0,lastAuto:0
+      type:"cube",g,cube,inner,edgeGroup,glowEdgeGroup,cornerGroup,
+      edgeCoreMat,edgeGlowMat,cornerMat,facets,brandFront,brandRight,
+      base1,base2,base3,pad,disc1,disc2,ring1,ring2,pieces,pieceData,
+      burstPts,burstDir,split:0,splitTarget:0,burst:0,lastAuto:0
     };
   }
 
@@ -391,9 +478,9 @@
 
     if(rig.type==="cube"){
       // Continuous slow rolling / tumbling.
-      rig.g.rotation.y += coarse ? .0026 : .0035;
-      rig.g.rotation.x = -.28 + Math.sin(t*.43)*.11;
-      rig.g.rotation.z = .06 + Math.sin(t*.31)*.045;
+      rig.g.rotation.y += coarse ? .0021 : .0030;
+      rig.g.rotation.x = -.34 + Math.sin(t*.40)*.055;
+      rig.g.rotation.z = .015 + Math.sin(t*.30)*.022;
       rig.g.position.y = .25 + Math.sin(t*.72)*.10;
       rig.ring1.rotation.z=t*.055;
       rig.ring2.rotation.y=t*.072;
@@ -408,9 +495,11 @@
       const s=rig.split;
 
       const assembledOpacity=Math.max(0,1-s*1.65);
-      rig.cube.material.opacity=.72*assembledOpacity;
-      rig.inner.material.opacity=assembledOpacity;
-      rig.edges.material.opacity=.88*assembledOpacity;
+      rig.cube.material.opacity=.34*assembledOpacity;
+      rig.inner.material.opacity=.42*assembledOpacity;
+      rig.edgeCoreMat.opacity=.96*assembledOpacity;
+      rig.edgeGlowMat.opacity=.20*assembledOpacity;
+      rig.cornerMat.opacity=.95*assembledOpacity;
       rig.brandFront.material.opacity=assembledOpacity;
       rig.brandRight.material.opacity=assembledOpacity;
       rig.facets.visible=s<.72;

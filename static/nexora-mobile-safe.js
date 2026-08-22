@@ -15,8 +15,8 @@
     window.__NEXORA_DISABLE_WEBGL__ = false;
     window.__NEXORA_PERF__ = {
       tier: "mobile-3d",
-      particleScale: 0.22,
-      dprCap: 1.0,
+      particleScale: 0.08,
+      dprCap: 1.25,
       story: "lite"
     };
 
