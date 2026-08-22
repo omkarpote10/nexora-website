@@ -4,6 +4,7 @@
   if(!window.THREE) return;
   const page=document.body.dataset.nxPage;
   if(page!=="home") return;
+  if(window.__NEXORA_THREE__?.rig?.type==="cube") return;
 
   const hero=document.querySelector(".hero");
   const services=document.querySelector("#services") || document.querySelector(".service-strip") || document.querySelector(".cards");

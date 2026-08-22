@@ -18,7 +18,7 @@
   if(!host || !window.THREE) return;
 
   const fallbackMap = {
-    home: [".n3d",".orbit",".rock",".shard"],
+    home: [".cube-stage-lite"],
     services: [".holo"],
     work: [".stage",".orbit"],
     about: [".constellation"],
@@ -112,51 +112,145 @@
     const g = new THREE.Group();
     rootGroup.add(g);
 
-    const left = new THREE.Mesh(new THREE.BoxGeometry(.72,4.6,.72,2,8,2),metal);
-    left.position.x=-1.55;
-    const right = new THREE.Mesh(new THREE.BoxGeometry(.72,4.6,.72,2,8,2),metal);
-    right.position.x=1.55;
-
-    const diag = new THREE.Mesh(new THREE.BoxGeometry(.76,5.45,.72,2,10,2),metal);
-    diag.rotation.z=-Math.atan2(3.1,4.1);
-    diag.position.set(0,0,0);
-
-    const bevelGeo = new THREE.BoxGeometry(.58,4.2,.32,2,8,1);
-    const leftInner = new THREE.Mesh(bevelGeo,darkMetal); leftInner.position.set(-1.53,0,.48);
-    const rightInner = new THREE.Mesh(bevelGeo,darkMetal); rightInner.position.set(1.53,0,.48);
-
-    g.add(left,right,diag,leftInner,rightInner);
-
-    const floor = new THREE.Mesh(
-      new THREE.CylinderGeometry(2.8,3.2,.58,9,2),
-      new THREE.MeshPhysicalMaterial({color:0x120a18,metalness:.55,roughness:.65,emissive:0x170020,emissiveIntensity:.25})
-    );
-    floor.position.y=-2.75;
-    floor.rotation.y=.25;
-    g.add(floor);
-
-    const crackGeo = new THREE.TorusGeometry(2.1,.018,6,100,Math.PI*1.2);
-    const crack = new THREE.Mesh(crackGeo,glowMat);
-    crack.rotation.x=Math.PI/2;
-    crack.rotation.z=.8;
-    crack.position.y=-2.38;
-    g.add(crack);
-
-    const o1=addOrbit(3.15,.016,[Math.PI/2.35,.1,-.18],.4);
-    const o2=addOrbit(2.52,.011,[1.05,.45,.6],.22);
-
-    const shardGeo = new THREE.TetrahedronGeometry(.22,0);
-    const shards=[];
-    const spots=[[-3.1,1.8,.4],[3.0,1.3,-.4],[2.7,-1.5,.3],[-2.7,-1.7,-.3],[.4,2.8,-.2]];
-    spots.forEach((p,i)=>{
-      const s=new THREE.Mesh(shardGeo,i%2?metal:darkMetal);
-      s.position.set(...p);
-      s.scale.setScalar(i===4?.7:1);
-      rootGroup.add(s);shards.push(s);
+    // Outer crystal cube.
+    const glass = new THREE.MeshPhysicalMaterial({
+      color:0x37115f,
+      metalness:.58,
+      roughness:.12,
+      transparent:true,
+      opacity:.72,
+      clearcoat:1,
+      clearcoatRoughness:.06,
+      emissive:0x2a004c,
+      emissiveIntensity:.68,
+      side:THREE.DoubleSide
     });
+    const innerMat = new THREE.MeshPhysicalMaterial({
+      color:0x110919,
+      metalness:.86,
+      roughness:.22,
+      clearcoat:1,
+      emissive:0x170026,
+      emissiveIntensity:.45
+    });
+    const cube = new THREE.Mesh(new THREE.BoxGeometry(3.35,3.35,3.35,3,3,3),glass);
+    const inner = new THREE.Mesh(new THREE.BoxGeometry(2.72,2.72,2.72,2,2,2),innerMat);
+    g.add(cube,inner);
 
-    g.rotation.y=-.18;
-    return {type:"home",g,left,right,diag,leftInner,rightInner,o1,o2,shards};
+    // Neon bevel-like edge cage.
+    const edgeGeo = new THREE.EdgesGeometry(new THREE.BoxGeometry(3.42,3.42,3.42));
+    const edgeMat = new THREE.LineBasicMaterial({color:0xc777ff,transparent:true,opacity:.88});
+    const edges = new THREE.LineSegments(edgeGeo,edgeMat);
+    g.add(edges);
+
+    // Internal diagonal crystal panels for faceted texture.
+    const facets = new THREE.Group();
+    const facetMat = new THREE.MeshBasicMaterial({
+      color:0x9c45ff,transparent:true,opacity:.10,side:THREE.DoubleSide,
+      blending:THREE.AdditiveBlending,depthWrite:false
+    });
+    for(let i=0;i<6;i++){
+      const p=new THREE.Mesh(new THREE.PlaneGeometry(3.5,3.5),facetMat.clone());
+      p.rotation.set((i%3)*Math.PI/3,(i%2)*Math.PI/4,(i*.37));
+      facets.add(p);
+    }
+    g.add(facets);
+
+    // NEXORA text texture.
+    function textTexture(text){
+      const cn=document.createElement("canvas");
+      cn.width=1024;cn.height=256;
+      const cx=cn.getContext("2d");
+      cx.clearRect(0,0,cn.width,cn.height);
+      const grd=cx.createLinearGradient(0,0,cn.width,0);
+      grd.addColorStop(0,"#f4e7ff");grd.addColorStop(.5,"#c67cff");grd.addColorStop(1,"#8b39ff");
+      cx.fillStyle=grd;
+      cx.font="800 128px Arial, sans-serif";
+      cx.textAlign="center";cx.textBaseline="middle";
+      cx.shadowColor="#a948ff";cx.shadowBlur=30;
+      cx.fillText(text,512,130);
+      const tex=new THREE.CanvasTexture(cn);
+      tex.colorSpace=THREE.SRGBColorSpace;
+      tex.anisotropy=Math.min(4,renderer.capabilities.getMaxAnisotropy());
+      return tex;
+    }
+    const brandTex=textTexture("NEXORA");
+    const brandMat=new THREE.MeshBasicMaterial({map:brandTex,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending});
+    const brandFront=new THREE.Mesh(new THREE.PlaneGeometry(2.65,.72),brandMat);
+    brandFront.position.z=1.725;
+    g.add(brandFront);
+    const brandRight=new THREE.Mesh(new THREE.PlaneGeometry(2.65,.72),brandMat.clone());
+    brandRight.position.x=1.725;brandRight.rotation.y=Math.PI/2;
+    g.add(brandRight);
+
+    // Glowing pedestal.
+    const baseMat=new THREE.MeshPhysicalMaterial({
+      color:0x100817,metalness:.72,roughness:.28,clearcoat:.8,
+      emissive:0x1c0030,emissiveIntensity:.48
+    });
+    const base1=new THREE.Mesh(new THREE.BoxGeometry(4.8,.24,4.8),baseMat);
+    base1.position.y=-2.55;
+    const base2=new THREE.Mesh(new THREE.BoxGeometry(4.15,.16,4.15),baseMat.clone());
+    base2.position.y=-2.35;
+    g.add(base1,base2);
+
+    const pad=new THREE.Mesh(
+      new THREE.BoxGeometry(1.15,.035,1.15),
+      new THREE.MeshBasicMaterial({color:0xd18aff,transparent:true,opacity:.86,blending:THREE.AdditiveBlending})
+    );
+    pad.position.y=-2.24;g.add(pad);
+
+    const ring1=addOrbit(3.05,.012,[Math.PI/2.22,.08,-.08],.28);
+    const ring2=addOrbit(2.35,.009,[1.02,.55,.4],.18);
+
+    // Split pieces - hidden while assembled.
+    const pieces=new THREE.Group();
+    const pieceData=[];
+    const miniGeo=new THREE.BoxGeometry(.82,.82,.82,1,1,1);
+    for(let x=-1;x<=1;x++)for(let y=-1;y<=1;y++)for(let z=-1;z<=1;z++){
+      const pm=new THREE.MeshPhysicalMaterial({
+        color:(x+y+z)%2===0?0x7d28d8:0x3b155b,
+        metalness:.68,roughness:.18,clearcoat:1,
+        transparent:true,opacity:.9,emissive:0x25003f,emissiveIntensity:.5
+      });
+      const m=new THREE.Mesh(miniGeo,pm);
+      const home=new THREE.Vector3(x*.94,y*.94,z*.94);
+      m.position.copy(home);
+      pieces.add(m);
+      const dir=home.clone();
+      if(dir.lengthSq()<.01) dir.set(.2,.8,.3);
+      dir.normalize();
+      pieceData.push({mesh:m,home,dir,phase:Math.random()*Math.PI*2});
+    }
+    pieces.visible=false;
+    g.add(pieces);
+
+    // Dedicated split-particle burst.
+    const burstCount=150;
+    const burstGeo=new THREE.BufferGeometry();
+    const burstPos=new Float32Array(burstCount*3);
+    const burstDir=[];
+    for(let i=0;i<burstCount;i++){
+      burstPos[i*3]=0;burstPos[i*3+1]=0;burstPos[i*3+2]=0;
+      const v=new THREE.Vector3(Math.random()-.5,Math.random()-.5,Math.random()-.5).normalize();
+      burstDir.push(v);
+    }
+    burstGeo.setAttribute("position",new THREE.BufferAttribute(burstPos,3));
+    const burstMat=new THREE.PointsMaterial({
+      color:0xc46eff,size:.045,transparent:true,opacity:0,depthWrite:false,
+      blending:THREE.AdditiveBlending
+    });
+    const burstPts=new THREE.Points(burstGeo,burstMat);
+    g.add(burstPts);
+
+    g.rotation.set(-.18,.58,.08);
+    g.position.y=.25;
+
+    return {
+      type:"cube",g,cube,inner,edges,facets,brandFront,brandRight,
+      base1,base2,pad,ring1,ring2,pieces,pieceData,burstPts,burstDir,
+      split:0,splitTarget:0,burst:0,lastAuto:0
+    };
   }
 
   function makeServices(){
@@ -249,6 +343,13 @@
     targetY=((e.clientY-r.top)/r.height-.5);
   });
   host.addEventListener("pointerleave",()=>{targetX=targetY=0});
+  host.addEventListener("pointerdown",()=>{
+    if(rig && rig.type==="cube"){
+      rig.splitTarget=1;
+      rig.burst=1;
+      setTimeout(()=>{ if(rig && rig.type==="cube") rig.splitTarget=0; },900);
+    }
+  });
 
   let scrollProgress=0;
   function updateScroll(){
@@ -288,25 +389,58 @@
     rootGroup.rotation.y += ((pointerX*.18)-rootGroup.rotation.y)*.045;
     rootGroup.rotation.x += ((-pointerY*.10)-rootGroup.rotation.x)*.045;
 
-    if(rig.type==="home"){
-      rig.g.position.y=Math.sin(t*.9)*.08;
-      rig.o1.rotation.z=t*.08;
-      rig.o2.rotation.y=t*.11;
-      rig.shards.forEach((s,i)=>{
-        s.rotation.x=t*(.28+i*.035);
-        s.rotation.y=t*(.21+i*.04);
-        s.position.y += Math.sin(t*.9+i)*.0015;
+    if(rig.type==="cube"){
+      // Continuous slow rolling / tumbling.
+      rig.g.rotation.y += .0035;
+      rig.g.rotation.x = -.16 + Math.sin(t*.43)*.085;
+      rig.g.rotation.z = .06 + Math.sin(t*.31)*.045;
+      rig.g.position.y = .25 + Math.sin(t*.72)*.10;
+      rig.ring1.rotation.z=t*.055;
+      rig.ring2.rotation.y=t*.072;
+      rig.pad.material.opacity=.70+Math.sin(t*1.4)*.16;
+
+      // Automatic cinematic split every ~10 seconds.
+      const cycle=t%10.5;
+      let target=0;
+      if(cycle>6.2 && cycle<8.0) target=Math.sin((cycle-6.2)/1.8*Math.PI);
+      rig.splitTarget=target;
+      rig.split += (rig.splitTarget-rig.split)*.075;
+      const s=rig.split;
+
+      const assembledOpacity=Math.max(0,1-s*1.65);
+      rig.cube.material.opacity=.72*assembledOpacity;
+      rig.inner.material.opacity=assembledOpacity;
+      rig.edges.material.opacity=.88*assembledOpacity;
+      rig.brandFront.material.opacity=assembledOpacity;
+      rig.brandRight.material.opacity=assembledOpacity;
+      rig.facets.visible=s<.72;
+
+      rig.pieces.visible=s>.025;
+      rig.pieceData.forEach((d,i)=>{
+        const out=1.15+s*2.0;
+        d.mesh.position.copy(d.home).addScaledVector(d.dir,s*out);
+        d.mesh.rotation.x=t*(.20+(i%5)*.015)+s*d.phase;
+        d.mesh.rotation.y=t*(.17+(i%7)*.012)-s*d.phase*.6;
+        d.mesh.scale.setScalar(.96-s*.12);
+        d.mesh.material.opacity=Math.min(.94,s*1.5);
       });
 
-      // V11 scroll-story controller owns the major N split/reassembly choreography.
-      if(!window.__NEXORA_SCROLL_STORY_ACTIVE__){
-        const split=Math.sin(Math.min(1,scrollProgress)*Math.PI);
-        rig.left.position.x=-1.55-split*.75;
-        rig.right.position.x=1.55+split*.75;
-        rig.diag.position.z=split*.65;
-        rig.leftInner.position.x=-1.53-split*.72;
-        rig.rightInner.position.x=1.53+split*.72;
-        rig.g.rotation.z=split*.06;
+      // Particle burst when split opens.
+      const opening = s>.16 && rig.burst<.04;
+      if(opening) rig.burst=1;
+      if(rig.burst>.002){
+        const bp=rig.burstPts.geometry.attributes.position.array;
+        const elapsed=1-rig.burst;
+        for(let i=0;i<rig.burstDir.length;i++){
+          const v=rig.burstDir[i];
+          const dist=elapsed*(2.2+(i%9)*.12);
+          bp[i*3]=v.x*dist;bp[i*3+1]=v.y*dist;bp[i*3+2]=v.z*dist;
+        }
+        rig.burstPts.geometry.attributes.position.needsUpdate=true;
+        rig.burstPts.material.opacity=rig.burst*.75;
+        rig.burst*=.94;
+      }else{
+        rig.burstPts.material.opacity=0;
       }
     }
     else if(rig.type==="services"){
