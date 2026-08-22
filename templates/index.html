@@ -600,6 +600,27 @@ h1{max-width:16ch}
   .cube-lite{animation:none!important}
 }
 
+
+/* ===== V17 HERO TAGLINE ===== */
+.hero-tagline{
+  display:inline-flex;align-items:center;gap:10px;
+  margin:16px 0 10px;padding:9px 14px;
+  border:1px solid rgba(184,88,255,.20);
+  border-radius:999px;
+  background:linear-gradient(90deg,rgba(134,45,255,.08),rgba(255,255,255,.015));
+  color:#d7b2f2;font-size:12px;font-weight:800;
+  letter-spacing:.14em;text-transform:uppercase;
+  box-shadow:inset 0 0 18px rgba(143,55,255,.04);
+}
+.hero-tagline:before{
+  content:"";width:24px;height:1px;
+  background:linear-gradient(90deg,#a74bff,#dd9fff);
+  box-shadow:0 0 9px rgba(174,80,255,.65)
+}
+@media(max-width:700px){
+  .hero-tagline{margin:12px 0 8px;font-size:10px;padding:8px 11px}
+}
+
 </style>
 
 <meta name="theme-color" content="#050507">
@@ -651,6 +672,7 @@ h1{max-width:16ch}
     <section class="hero">
       <div class="hero-copy reveal">
         <span class="eyebrow"><i class="dot"></i> Digital solutions. Limitless possibilities.</span>
+        <div class="hero-tagline">Build Beyond Ordinary</div>
         <h1>We Don't Just Build Websites.<br><span class="grad">We Build Digital Experiences.</span></h1>
         <p class="lead">Nexora is your growth partner for powerful websites, mobile apps, immersive 3D experiences, e-commerce and custom software engineered to make businesses stand out.</p>
         <div class="actions"><a class="btn primary" href="contact.html">Start Your Project <span>→</span></a><a class="btn" href="work.html">Explore Our Work <span>↗</span></a></div>
