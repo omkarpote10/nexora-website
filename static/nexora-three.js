@@ -31,7 +31,7 @@
   host.appendChild(shell);
 
   const canvas = shell.querySelector("canvas");
-  const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true, powerPreference:"high-performance"});
+  const renderer = new THREE.WebGLRenderer({canvas, antialias:!coarse, alpha:true, powerPreference:"high-performance"});
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, perf.dprCap || 1.8));
   renderer.setClearColor(0x000000,0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -391,8 +391,8 @@
 
     if(rig.type==="cube"){
       // Continuous slow rolling / tumbling.
-      rig.g.rotation.y += .0035;
-      rig.g.rotation.x = -.16 + Math.sin(t*.43)*.085;
+      rig.g.rotation.y += coarse ? .0026 : .0035;
+      rig.g.rotation.x = -.28 + Math.sin(t*.43)*.11;
       rig.g.rotation.z = .06 + Math.sin(t*.31)*.045;
       rig.g.position.y = .25 + Math.sin(t*.72)*.10;
       rig.ring1.rotation.z=t*.055;
